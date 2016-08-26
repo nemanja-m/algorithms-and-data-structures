@@ -5,7 +5,7 @@ all: merge
 
 run: merge
 	@rm -f *.o
-	@./merge.out $(LISTS)
+	@./merge.out $(ARRAYS)
 
 merge: merge.o helpers.o utils.o
 	@$(CC) $(FLAGS) merge.o helpers.o utils.o -o merge.out
