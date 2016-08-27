@@ -10,8 +10,8 @@ run: test
 test: test.o min_cut.o
 	@$(CC) $(FLAGS) min_cut.o test.o -o test.out
 
-test.o: test.cpp graph.hpp
-	@$(CC) $(FLAGS) -c test.cpp graph.hpp
+test.o: test.cpp
+	@$(CC) $(FLAGS) -c test.cpp
 
 min_cut.o: min_cut.hpp min_cut.cpp graph.hpp
 	@$(CC) $(FLAGS) -c  graph.hpp min_cut.cpp

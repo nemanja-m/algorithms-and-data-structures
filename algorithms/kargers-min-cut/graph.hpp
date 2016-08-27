@@ -8,10 +8,6 @@ struct Edge {
   size_t first;
   size_t second;
 
-  bool contains(size_t vertex) {
-    return (first == vertex) || (second == vertex);
-  }
-
   // Updates connected vertices after merging
   void update(size_t old_vertex, size_t new_vertex) {
     if (this->first == old_vertex)
@@ -32,12 +28,10 @@ struct Edge {
 typedef std::vector<Edge> Edges;
 
 struct Graph {
-  size_t edges_count;
   size_t vertices_count;
   Edges  edges;
 
-  Graph(size_t e_count, size_t v_count) {
-    this->edges_count = e_count;
+  Graph(size_t v_count, size_t e_count) {
     this->vertices_count = v_count;
     this->edges = Edges(e_count);
   }
