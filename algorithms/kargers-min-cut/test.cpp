@@ -2,6 +2,8 @@
 #include "min_cut.hpp"
 #include "iostream"
 
+#define TRIALS 10
+
 using namespace std;
 
 int main(int argc, char const *argv[]) {
@@ -13,11 +15,15 @@ int main(int argc, char const *argv[]) {
   graph.edges[3] = Edge(1, 3);
   graph.edges[4] = Edge(2, 3);
 
-  cout << "\nMin cut: " << karger_min_cut(graph) << endl;
-  cout << "\nCrossing edges: " << endl;
+  size_t results[TRIALS];
 
-  for (auto e : graph.edges)
-    cout << e.first << " - " << e.second << endl;
+  // Run algorithm multiple times to increase probabilty that
+  // we'll find min cut
+  for (size_t i = 0; i < TRIALS; i++) {
+    results[i] = karger_min_cut(graph);
+  }
+
+  cout << "\nMin cut: " << *min_element(results, results + TRIALS) << "\n\n";
 
   return 0;
 }

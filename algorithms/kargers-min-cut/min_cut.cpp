@@ -1,6 +1,6 @@
 #include "min_cut.hpp"
 
-size_t karger_min_cut(Graph &graph) {
+size_t karger_min_cut(Graph graph) {
   while (graph.vertices_count > 2) {
     size_t edge = random_edge(graph.edges.size() - 1);
     contract(graph, edge);

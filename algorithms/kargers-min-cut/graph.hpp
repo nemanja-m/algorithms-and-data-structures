@@ -35,6 +35,11 @@ struct Graph {
     this->vertices_count = v_count;
     this->edges = Edges(e_count);
   }
+
+  Graph(size_t v_count, const Edges edges) {
+    this->vertices_count = v_count;
+    this->edges = edges;
+  }
 };
 
 #endif
