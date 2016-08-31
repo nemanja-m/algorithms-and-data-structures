@@ -18,17 +18,17 @@ int main(int argc, char const *argv[]) {
   }
 
   cout << "\nOriginal array:" << endl;
-  print(array, 10);
+  print(array, COUNT);
   cout << endl;
 
-  bubble_sort(array, array + 10, [] (const int x, const int y) { return x > y; });
+  bubble_sort(array, array + COUNT, greater<int>());
   cout << "Descending order:" << endl;
-  print(array, 10);
+  print(array, COUNT);
   cout << endl;
 
-  bubble_sort(array, array + 11);
+  bubble_sort(array, array + COUNT);
   cout << "Ascending order:" << endl;
-  print(array, 10);
+  print(array, COUNT);
   cout << "\n-----------------------------\n\n";
 
   return 0;
