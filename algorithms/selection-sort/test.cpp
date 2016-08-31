@@ -1,4 +1,4 @@
-#include "bsort.hpp"
+#include "ssort.hpp"
 #include "../../helpers/helpers.hpp"
 #include "iostream"
 
@@ -8,7 +8,7 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
 
-  cout << "\n----- Bubble sort test -----\n";
+  cout << "\n----- Selection sort test -----\n";
 
   int *array = new int[COUNT];
   srand(time(0));
@@ -21,15 +21,15 @@ int main(int argc, char const *argv[]) {
   print(array, COUNT);
   cout << endl;
 
-  bubble_sort(array, array + COUNT, greater<int>());
+  selection_sort(array, array + COUNT, greater<int>());
   cout << "Descending order:" << endl;
   print(array, COUNT);
   cout << endl;
 
-  bubble_sort(array, array + COUNT);
+  selection_sort(array, array + COUNT);
   cout << "Ascending order:" << endl;
   print(array, COUNT);
-  cout << "\n-----------------------------\n\n";
+  cout << "\n--------------------------------\n\n";
 
   return 0;
 }

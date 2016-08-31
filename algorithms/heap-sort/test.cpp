@@ -7,7 +7,7 @@
 using namespace std;
 
 int main(int argc, char const *argv[]) {
-  cout << "\n----- Heap sort test -----\n\n";
+  cout << "\n----- Heap sort test -----\n";
 
   srand(time(0));
   int *array = new int[COUNT];
