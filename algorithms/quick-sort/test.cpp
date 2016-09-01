@@ -1,29 +1,37 @@
 #include "qsort.hpp"
 #include "../../helpers/helpers.hpp"
-#define COUNT 20
 #include "vector"
+
+#define COUNT 20
+
+using namespace std;
 
 int main(int argc, char const *argv[]) {
 
+  cout << "\n----- Quick sort test -----\n";
+
   srand(time(0));
-  std::vector<int> array;
+  vector<int> array;
 
   for (size_t i = 0; i < COUNT; i++) {
-    array.push_back(rand() % 10 + 1);
+    array.push_back(rand() % 100);
   }
 
-  std::cout << "\nOriginal: " << std::endl;
+  cout << "\nOriginal array: " << endl;
   print(array);
+  cout << endl;
 
   qsort(array.begin(), array.end());
 
-  std::cout << "\nSorted ascending: " << std::endl;
+  cout << "\nAscending order: " << endl;
   print(array);
+  cout << endl;
 
-  qsort(array.begin(), array.end(), std::greater<int>());
+  qsort(array.begin(), array.end(), greater<int>());
 
-  std::cout << "\nSorted descending: " << std::endl;
+  std::cout << "Descending order: " << std::endl;
   print(array);
+  cout << "\n----------------------------\n\n";
 
   return 0;
 }

@@ -26,7 +26,9 @@ int main(int argc, char const *argv[]) {
   heap_sort(array, array + COUNT, greater<int>());
   cout << "\nDescending order:" << endl;
   print(array, COUNT);
-
   cout << "\n---------------------------\n\n";
+
+  delete[] array;
+
   return 0;
 }

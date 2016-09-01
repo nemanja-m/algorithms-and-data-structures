@@ -31,5 +31,7 @@ int main(int argc, char const *argv[]) {
   print(array, COUNT);
   cout << "\n----------------------------\n\n";
 
+  delete[] array;
+  
   return 0;
 }
