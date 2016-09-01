@@ -3,7 +3,7 @@
 
 #include "iterator"
 
-template <typename Iter, typename Comparator>
+template <class Iter, class Comparator>
 void insertion_sort(Iter begin, Iter end, Comparator cmp) {
   for (auto i = begin + 1; i != end; i++) {
     auto j = i;
@@ -14,7 +14,7 @@ void insertion_sort(Iter begin, Iter end, Comparator cmp) {
   }
 }
 
-template <typename Iter>
+template <class Iter>
 void insertion_sort(Iter begin, Iter end) {
   typedef typename std::iterator_traits<Iter>::value_type T;
   insertion_sort(begin, end, std::less<T>());
