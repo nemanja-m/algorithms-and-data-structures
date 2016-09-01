@@ -1,5 +1,5 @@
 #include "vector.hpp"
-#include "../../helpers/helpers.hpp"
+#include "../../helpers/print.hpp"
 #include "iostream"
 
 #define COUNT 5
@@ -18,8 +18,7 @@ int main(int argc, char const *argv[]) {
   }
 
   cout << "\nOriginal vector: " << endl;
-  for (auto & v : vector)
-    cout << v << " ";
+  print(vector.begin(), vector.end());
 
   cout << "\n\n----------------------------\n\n";
 

@@ -7,14 +7,11 @@ run: test
 	@rm -f *.o
 	@./test.out
 
-test: test.o helpers.o
-	@$(CC) $(FLAGS) helpers.o test.o -o test.out
+test: test.o
+	@$(CC) $(FLAGS) test.o -o test.out
 
-test.o: test.cpp merge.hpp
-	@$(CC) $(FLAGS) -c  merge.hpp test.cpp
-
-helpers.o: ../../helpers/helpers.hpp ../../helpers/helpers.cpp
-	@$(CC) $(FLAGS) -c ../../helpers/helpers.cpp
+test.o: test.cpp merge.hpp ../../helpers/helpers.hpp
+	@$(CC) $(FLAGS) -c  merge.hpp ../../helpers/helpers.hpp test.cpp
 
 clean:
 	@rm -f test.out

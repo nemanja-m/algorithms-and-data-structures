@@ -7,14 +7,12 @@ run: test
 	@rm -f *.o
 	@./test.out
 
-test: test.o helpers.o
-	@$(CC) $(FLAGS) helpers.o test.o -o test.out
+test: test.o
+	@$(CC) $(FLAGS) test.o -o test.out
 
-test.o: test.cpp qsort.hpp
-	@$(CC) $(FLAGS) -c  qsort.hpp test.cpp
+test.o: test.cpp qsort.hpp ../../helpers/print.hpp
+	@$(CC) $(FLAGS) -c qsort.hpp ../../helpers/print.hpp test.cpp
 
-helpers.o: ../../helpers/helpers.hpp ../../helpers/helpers.cpp
-	@$(CC) $(FLAGS) -c ../../helpers/helpers.cpp
 clean:
 	@rm -f test.out
 	@rm -f *.o

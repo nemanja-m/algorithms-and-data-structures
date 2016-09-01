@@ -1,13 +1,13 @@
 #include "hsort.hpp"
 #include "iostream"
-#include "../../helpers/helpers.hpp"
+#include "../../helpers/print.hpp"
 
 #define COUNT 10
 
 using namespace std;
 
 int main(int argc, char const *argv[]) {
-  cout << "\n----- Heap sort test -----\n";
+  cout << "\n-------- Heap sort test --------\n";
 
   srand(time(0));
   int *array = new int[COUNT];
@@ -17,16 +17,16 @@ int main(int argc, char const *argv[]) {
   }
 
   cout << "\nOriginal array:" << endl;
-  print(array, COUNT);
+  print(array, array + COUNT);
 
   heap_sort(array, array + COUNT);
   cout << "\nAscending order:" << endl;
-  print (array, COUNT);
+  print(array, array + COUNT);
 
   heap_sort(array, array + COUNT, greater<int>());
   cout << "\nDescending order:" << endl;
-  print(array, COUNT);
-  cout << "\n---------------------------\n\n";
+  print(array, array + COUNT);
+  cout << "\n---------------------------------\n\n";
 
   delete[] array;
 

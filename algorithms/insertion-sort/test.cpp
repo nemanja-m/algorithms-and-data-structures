@@ -1,5 +1,5 @@
 #include "isort.hpp"
-#include "../../helpers/helpers.hpp"
+#include "../../helpers/print.hpp"
 #include "iostream"
 
 #define COUNT 10
@@ -18,20 +18,20 @@ int main(int argc, char const *argv[]) {
   }
 
   cout << "\nOriginal array:" << endl;
-  print(array, COUNT);
-  cout << endl;
-
-  insertion_sort(array, array + COUNT, greater<int>());
-  cout << "Descending order:" << endl;
-  print(array, COUNT);
+  print(array, array + COUNT);
   cout << endl;
 
   insertion_sort(array, array + COUNT);
   cout << "Ascending order:" << endl;
-  print(array, COUNT);
+  print(array, array + COUNT);
+  cout << endl;
+
+  insertion_sort(array, array + COUNT, greater<int>());
+  cout << "Descending order:" << endl;
+  print(array, array + COUNT);
   cout << "\n--------------------------------\n\n";
 
   delete[] array;
-  
+
   return 0;
 }

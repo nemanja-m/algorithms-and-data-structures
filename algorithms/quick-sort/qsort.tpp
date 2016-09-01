@@ -12,24 +12,24 @@ size_t choose_pivot(size_t range_from, size_t range_to) {
   return distr(generator);
 }
 
-template<class Iter, class Compare>
+template <class Iter, class Compare>
 size_t partition(size_t pivot, Iter first, size_t count, Compare cmp) {
   std::swap(*first, *(first + pivot));
 
   size_t idx = 1; // Begining of elements bigger than pivot
 
   for (size_t i = 1; i < count; i++) {
-    if (cmp(*(first + i), *first)) {                   // Smaller than pivot
-      std::swap(*(first + i), *(first + idx++));
+    if (cmp( *(first + i), *first ) ) {                   // Smaller than pivot
+      std::swap( *(first + i), *(first + idx++ ) );
     }
   }
 
-  std::swap(*first, *(first + idx - 1));          // Place pivot on right spot
+  std::swap( *first, *(first + idx - 1) );          // Place pivot on right spot
 
   return idx - 1;   // Return index of pivot element after partitioning
 }
 
-template<class Iter, class Compare>
+template <class Iter, class Compare>
 void qsort(Iter first, Iter last, Compare cmp) {
   if (first == last)
     return;
@@ -43,7 +43,7 @@ void qsort(Iter first, Iter last, Compare cmp) {
   qsort(first + split_idx + 1, last, cmp);
 }
 
-template<class Iter>
+template <class Iter>
 void qsort(Iter first, Iter last) {
   typedef typename std::iterator_traits<Iter>::value_type T;
   qsort(first, last, std::less<T>());

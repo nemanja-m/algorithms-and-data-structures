@@ -62,5 +62,7 @@ int main(int argc, char const *argv[]) {
   cout << "\nFinal array: " << endl;
   print(final_array);
 
+  delete[] nodes;
+  
   return 0;
 }

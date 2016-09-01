@@ -4,7 +4,7 @@
 #include "iterator"
 #include "algorithm"
 
-template<class Iter, class Comparator>
+template <class Iter, class Comparator>
 void heap_sort(Iter begin, Iter end, Comparator cmp) {
   if (begin == end)
     return;
@@ -19,7 +19,7 @@ void heap_sort(Iter begin, Iter end, Comparator cmp) {
   }
 }
 
-template<class Iter>
+template <class Iter>
 void heap_sort(Iter begin, Iter end) {
   typedef typename std::iterator_traits<Iter>::value_type T;
   heap_sort(begin, end, std::less<T>());

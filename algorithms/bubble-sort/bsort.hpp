@@ -3,7 +3,7 @@
 
 #include "iterator"
 
-template<class Iter, class Comparator>
+template <class Iter, class Comparator>
 void bubble_sort(Iter begin, Iter end, Comparator cmp) {
   for (auto i = begin; i != (end - 1); i++) {
     for (auto j = i + 1; j != end; j++) {
@@ -13,7 +13,7 @@ void bubble_sort(Iter begin, Iter end, Comparator cmp) {
   }
 }
 
-template<class Iter>
+template <class Iter>
 void bubble_sort(Iter begin, Iter end) {
   typedef typename std::iterator_traits<Iter>::value_type T;
   bubble_sort(begin, end, std::less<T>());

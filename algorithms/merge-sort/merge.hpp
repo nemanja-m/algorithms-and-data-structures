@@ -33,7 +33,7 @@ void merge_sort(Iter begin, Iter end, Comparator cmp) {
 
     if (left_iter == left + left_length) // Left subarray merged
       *iter = *(right_iter++);
-    else if (right_iter == right + right_length)
+    else if (right_iter == right + right_length) // Right subarray merged
       *iter = *(left_iter++);
     else if (cmp( *right_iter, *left_iter) )
       *iter = *(right_iter++);
