@@ -1,6 +1,5 @@
 #ifdef __HEAP_H__
 
-#include "../../helpers/helpers.hpp"
 #include "stdexcept"
 #include "math.h"
 #include "iostream"
@@ -14,7 +13,7 @@
 
 #define COMPARE(x, y) (this->type == MAX ? x > y : x < y)
 
-template<class T>
+template <class T>
 int Heap<T>::find_replace_index(int left, int right, int parent) {
   int replace_idx;
 
@@ -31,7 +30,7 @@ int Heap<T>::find_replace_index(int left, int right, int parent) {
   return replace_idx;
 }
 
-template<class T>
+template <class T>
 void Heap<T>::heapify(int idx) {
   int for_replace = find_replace_index(LEFT(idx), RIGHT(idx), idx);
 
@@ -41,7 +40,7 @@ void Heap<T>::heapify(int idx) {
   }
 }
 
-template<class T>
+template <class T>
 void Heap<T>::build_heap() {
   for (int i = get_length() / 2 - 1; i >= 0; i--)
     this->heapify(i);
@@ -56,7 +55,7 @@ Heap<T>::Heap(const T *array, size_t length, Type type) {
   build_heap();
 }
 
-template<class T>
+template <class T>
 T Heap<T>::get_root_element() {
   if (this->size == 0)
     throw std::runtime_error("Heap empty");
@@ -64,7 +63,7 @@ T Heap<T>::get_root_element() {
   return this->nodes[0];
 }
 
-template<class T>
+template <class T>
 T Heap<T>::extract_root() {
   if (this->size == 0)
     throw std::runtime_error("Heap empty");
@@ -78,7 +77,7 @@ T Heap<T>::extract_root() {
 }
 
 
-template<class T>
+template <class T>
 void Heap<T>::update_key(int node, T key) {
   if (this->type == MAX && this->nodes[node] > key)
     throw std::runtime_error("New key is smaller than original!");
@@ -94,11 +93,8 @@ void Heap<T>::update_key(int node, T key) {
   }
 }
 
-template<class T>
+template <class T>
 void Heap<T>::insert(T key) {
-  // int limit = this->type == MAX ? INT_MIN : INT_MAX;
-  // this->nodes.push_back(limit);
-  // update_key(this->size++, key);
   this->nodes.push_back(key);
   this->size++;
   int node = get_length() - 1;
@@ -108,7 +104,7 @@ void Heap<T>::insert(T key) {
   }
 }
 
-template<class T>
+template <class T>
 T Heap<T>::remove(int node) {
   if (node >= this->size)
     throw std::runtime_error("Index out of bounds");
@@ -122,7 +118,7 @@ T Heap<T>::remove(int node) {
   return ret;
 }
 
-template<class T>
+template <class T>
 void Heap<T>::sort(T *array, size_t length, Order ord) {
   Type type = (ord == ASC ? MAX : MIN);
   Heap<T> temp(array, length, type);
@@ -136,7 +132,7 @@ void Heap<T>::sort(T *array, size_t length, Order ord) {
   std::copy(temp.nodes.begin(), temp.nodes.end(), array);
 }
 
-template<class T>
+template <class T>
 void Heap<T>::print() {
   if (this->nodes.empty()) {
     std::cout << "Heap empty!" << std::endl;

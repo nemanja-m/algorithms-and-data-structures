@@ -1,4 +1,3 @@
-#include "../../helpers/helpers.hpp"
 #include "../../data-structures/heap/heap.hpp"
 #include "utils.hpp"
 #include "iostream"
@@ -21,7 +20,7 @@ int main(int argc, char const *argv[]) {
   // Make 'count' arrays with sorted random numbers
   Arrays arrays = make_arrays(count);
 
-  print(arrays);
+  print_arrays(arrays);
 
   // Take 1st element from all arrays
   Node *nodes = new Node[count];
@@ -60,9 +59,9 @@ int main(int argc, char const *argv[]) {
   }
 
   cout << "\nFinal array: " << endl;
-  print(final_array);
+  print(final_array.begin(), final_array.end());
 
   delete[] nodes;
-  
+
   return 0;
 }

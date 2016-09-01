@@ -6,7 +6,7 @@ Node make_node(Array &v, size_t array_no) {
   return ret;
 }
 
-bool arrays_empty(Arrays &arrays) {
+bool arrays_empty(const Arrays &arrays) {
   for (auto array : arrays)
     if (!array.empty())
       return false;
@@ -33,4 +33,9 @@ Arrays make_arrays(size_t count) {
   }
 
   return temp;
+}
+
+void print_arrays(const Arrays & arrs) {
+  for (auto &array : arrs)
+    print(array.begin(), array.end());
 }

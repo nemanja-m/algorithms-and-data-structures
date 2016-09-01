@@ -7,14 +7,11 @@ run: test
 	@rm -f *.o
 	./test.out
 
-test: test.o helpers.o heap.hpp
-	@$(CC) $(FLAGS) test.o helpers.o -o test.out
+test: test.o
+	@$(CC) $(FLAGS) test.o -o test.out
 
-helpers.o: ../../helpers/helpers.cpp ../../helpers/helpers.hpp
-	@$(CC) $(FLAGS) -c ../../helpers/helpers.cpp
-
-test.o: test.cpp
-	@$(CC) $(FLAGS) -c test.cpp
+test.o: test.cpp ../../helpers/print.hpp  heap.hpp
+	@$(CC) $(FLAGS) -c test.cpp ../../helpers/print.hpp  heap.hpp
 
 clean:
 	@rm -f test.out

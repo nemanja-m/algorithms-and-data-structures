@@ -10,8 +10,8 @@ run: test
 test: test.o
 	@$(CC) $(FLAGS) test.o -o test.out
 
-test.o: test.cpp merge.hpp ../../helpers/helpers.hpp
-	@$(CC) $(FLAGS) -c  merge.hpp ../../helpers/helpers.hpp test.cpp
+test.o: test.cpp merge.hpp ../../helpers/print.hpp
+	@$(CC) $(FLAGS) -c  merge.hpp ../../helpers/print.hpp test.cpp
 
 clean:
 	@rm -f test.out

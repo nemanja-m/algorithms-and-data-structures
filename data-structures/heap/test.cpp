@@ -1,5 +1,5 @@
 #include "heap.hpp"
-#include "../../helpers/helpers.hpp"
+#include "../../helpers/print.hpp"
 #include "iostream"
 #include "stdlib.h"
 
@@ -11,13 +11,13 @@ using namespace std;
 int* gen_array(size_t count);
 
 // Test for removing nodes from heap
-template<typename T> void remove_test(Heap<T> &);
+template <typename T> void remove_test(Heap<T> &);
 
 int main(int argc, char const *argv[]) {
 
   int *array = gen_array(COUNT);
   cout << "\nOriginal:" << endl;
-  print(array, COUNT);
+  print(array, array + COUNT);
 
   Heap<int> heap(array, COUNT, MIN);
   cout << "\nPretty: " << endl;
@@ -43,7 +43,7 @@ int* gen_array(std::size_t count) {
   return array;
 }
 
-template<typename T> void remove_test(Heap<T> &heap) {
+template <typename T> void remove_test(Heap<T> &heap) {
   cout << "\nRemoved element: " << heap.remove(0) << endl;
   heap.print();
 }

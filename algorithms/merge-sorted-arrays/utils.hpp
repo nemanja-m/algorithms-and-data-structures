@@ -4,6 +4,7 @@
 #include "stddef.h"
 #include "ostream"
 #include "vector"
+#include "../../helpers/print.hpp"
 
 // Represents element in array with information about
 // index of that array. Used for merging k sorted arrays into single sorted
@@ -47,9 +48,12 @@ Array  make_array(size_t);
 Arrays make_arrays(size_t);
 
 // Check if given arrays are empty
-bool   arrays_empty(Arrays &);
+bool   arrays_empty(const Arrays &);
 
 // Take first element fro marray and construct 'Node'
 Node   make_node(Array &, size_t);
+
+// Prints input arrays
+void   print_arrays(const Arrays &);
 
 #endif

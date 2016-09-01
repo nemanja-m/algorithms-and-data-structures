@@ -7,17 +7,14 @@ run: merge
 	@rm -f *.o
 	@./merge.out $(ARRAYS)
 
-merge: merge.o helpers.o utils.o
-	@$(CC) $(FLAGS) merge.o helpers.o utils.o -o merge.out
-
-helpers.o: ../../helpers/helpers.cpp ../../helpers/helpers.hpp
-	@$(CC) $(FLAGS) -c ../../helpers/helpers.cpp
+merge: merge.o utils.o
+	@$(CC) $(FLAGS) merge.o utils.o -o merge.out
 
 merge.o: merge.cpp
 	@$(CC) $(FLAGS) -c merge.cpp
 
-utils.o: utils.hpp utils.cpp
-	@$(CC) $(FLAGS) -c utils.cpp
+utils.o: utils.hpp utils.cpp ../../helpers/print.hpp
+	@$(CC) $(FLAGS) -c utils.cpp ../../helpers/print.hpp
 
 clean:
 	@rm merge.out
