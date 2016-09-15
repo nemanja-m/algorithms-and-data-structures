@@ -5,14 +5,21 @@
 
 using namespace std;
 
-ExtendedGraph* load_graph(string filename = "test_data/test_1.txt");
+ExtendedGraph* load_graph(string filename = "test_data/test_2.txt");
 void print_graph(Graph *graph);
 
 int main(int argc, char const *argv[]) {
   ExtendedGraph *graph = load_graph();
-  print_graph(graph);
+  // graph->print_graph();
 
+  graph->print_SCCs();
 
+  cout << "\n\n\t-------\n\n";
+  //
+  // ExtendedGraph *reverse = graph->transpose();
+  // print_graph(reverse);
+  //
+  // delete reverse;
   delete graph;
 
   return 0;
@@ -30,10 +37,4 @@ ExtendedGraph* load_graph(string filename) {
   }
 
   return graph;
-}
-
-void print_graph(Graph *graph) {
-  for (auto &kv : graph->vertices)
-    for (auto i = kv.second->edges.begin(); i != kv.second->edges.end(); i++)
-      cout << kv.first << " - " << *i << endl;
 }
