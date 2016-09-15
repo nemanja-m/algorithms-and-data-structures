@@ -2,7 +2,7 @@
 #define __DFS__
 
 #include "stack"
-#include "graph.hpp"
+#include "../../data-structures/graph-representation/graph.hpp"
 #include "stdexcept"
 #include "iostream"
 
