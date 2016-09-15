@@ -1,22 +1,26 @@
 #include "string"
 #include "fstream"
 #include "scc.hpp"
+#include "iostream"
 
 using namespace std;
 
-Graph* load_graph(string filename = "test_data/test_1.txt");
+ExtendedGraph* load_graph(string filename = "test_data/test_1.txt");
+void print_graph(Graph *graph);
 
 int main(int argc, char const *argv[]) {
-  Graph *graph = load_graph();
+  ExtendedGraph *graph = load_graph();
+  print_graph(graph);
+
 
   delete graph;
 
   return 0;
 }
 
-Graph* load_graph(string filename) {
+ExtendedGraph* load_graph(string filename) {
   ifstream file(filename);
-  Graph *graph = new Graph();
+  ExtendedGraph *graph = new ExtendedGraph();
 
   int from, to;
 
@@ -26,4 +30,10 @@ Graph* load_graph(string filename) {
   }
 
   return graph;
+}
+
+void print_graph(Graph *graph) {
+  for (auto &kv : graph->vertices)
+    for (auto i = kv.second->edges.begin(); i != kv.second->edges.end(); i++)
+      cout << kv.first << " - " << *i << endl;
 }

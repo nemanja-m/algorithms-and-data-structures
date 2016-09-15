@@ -9,11 +9,15 @@ typedef std::stack<Vertex *> Stack;
 // Some helper methods are added to original graph data structure
 // These methods help in computing strongly connected components
 struct ExtendedGraph : Graph {
+
+  // Fills Stack with vertices (in increasing order of finishing times).
+  // The top element of stack has the maximum finishing time
   void fill_stack(Vertex *vertex, bool visited[], Stack &stack);
+
+  // Returns reverse (or transpose) of this graph
+  ExtendedGraph* transpose();
 };
 
-// Fills Stack with vertices (in increasing order of finishing times).
-// The top element of stack has the maximum finishing time
 void ExtendedGraph::fill_stack(Vertex *vertex, bool visited[], Stack &stack) {
   visited[vertex->key] = true;
 
@@ -23,6 +27,19 @@ void ExtendedGraph::fill_stack(Vertex *vertex, bool visited[], Stack &stack) {
   }
 
   stack.push(vertex);
+}
+
+ExtendedGraph* ExtendedGraph::transpose() {
+  ExtendedGraph *graph = new ExtendedGraph();
+
+  for (auto &kv : this->vertices) {
+    for (auto i = kv.second->edges.begin(); i != kv.second->edges.end(); i++) {
+      graph->add_vertex(*i);
+      graph->add_edge(*i, kv.first);
+    }
+  }
+
+  return graph;
 }
 
 
