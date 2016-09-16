@@ -4,8 +4,13 @@
 #include "../../data-structures/graph-representation/graph.hpp"
 #include "stack"
 #include "iostream"
+#include "algorithm"
 
 typedef std::stack<int> Stack;
+
+// Array of SCCs
+// Each row contains vertices for given SCC
+typedef std::vector<std::vector<int> > SCCs;
 
 // Some helper methods are added to original graph data structure
 // These methods help in computing strongly connected components
@@ -19,26 +24,24 @@ struct ExtendedGraph : Graph {
   ExtendedGraph* transpose();
 
   // Prints all strongly connected components
-  void print_SCCs();
+  SCCs count_SCCs();
 
   // Prints all edges in graph
   void print_graph();
 
   // Depth first search. Returns number of traversed vertices
   // For SCC it returns size of single SCC
-  size_t DFS(int key, std::map<int, bool> &visited, size_t count = 0);
+  void DFS(int key, std::map<int, bool> &visited, std::vector<int> &scc);
 };
 
 void ExtendedGraph::fill_stack(int key, std::map<int, bool> &visited, Stack &stack) {
   visited[key] = true;
 
   if (exists(key)) {
-    for (auto i = vertices[key]->edges.begin(); i != vertices[key]->edges.end(); i++) {
+    for (auto i = vertices[key]->edges.begin(); i != vertices[key]->edges.end(); i++)
       if (!visited[*i])
         fill_stack(*i, visited, stack);
-    }
   }
-
 
   stack.push(key);
 }
@@ -56,7 +59,7 @@ ExtendedGraph* ExtendedGraph::transpose() {
   return graph;
 }
 
-void ExtendedGraph::print_SCCs() {
+SCCs ExtendedGraph::count_SCCs() {
   // Mark all vertices as unchecked for 1st DFS
   // Take one extra value in one-based index
   std::map<int, bool> visited;
@@ -83,32 +86,39 @@ void ExtendedGraph::print_SCCs() {
 
   ExtendedGraph *transposed = this->transpose();
 
+  // List of all SCCs and theri vertices in graph
+  SCCs sccs;
+
   while (!stack.empty()) {
     int key = stack.top();
     stack.pop();
 
-    //  Print Strongly connected component of the popped vertex
     if (!visited[key]) {
-      transposed->DFS(key, visited, 0);
-      // std::cout << transposed->DFS(key, visited, 0);
-      std::cout << std::endl;
-     }
+      std::vector<int> scc;
+      transposed->DFS(key, visited, scc);
+      sccs.push_back(scc);
+    }
   }
 
+  // Sort SCCs in descending order according to SCC size
+  std::sort(sccs.begin(), sccs.end(),
+    [](std::vector<int> &a, std::vector<int> &b) { return a.size() > b.size();});
+
   delete transposed;
+  return sccs;
 }
 
-size_t ExtendedGraph::DFS(int key, std::map<int, bool> &visited, size_t count) {
+void ExtendedGraph::DFS(int key, std::map<int, bool> &visited, std::vector<int> &scc) {
   visited[key] = true;
-  std::cout << key << " ";
+
+  // Add vertex to SCC
+  scc.push_back(key);
 
   if (exists(key)) {
     for (auto i = vertices[key]->edges.begin(); i != vertices[key]->edges.end(); i++)
       if (!visited[*i])
-        DFS(*i, visited, count + 1);
+        DFS(*i, visited, scc);
   }
-
-  return count;
 }
 
 void ExtendedGraph::print_graph() {

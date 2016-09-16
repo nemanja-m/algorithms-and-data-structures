@@ -16,3 +16,6 @@
 *.la
 *.a
 *.lib
+
+# Ignore log files
+*.log
