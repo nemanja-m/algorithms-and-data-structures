@@ -1,7 +1,6 @@
 #include "string"
 #include "fstream"
 #include "scc.hpp"
-#include "iostream"
 
 using namespace std;
 
