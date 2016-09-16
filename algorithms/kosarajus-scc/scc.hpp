@@ -32,6 +32,8 @@ struct ExtendedGraph : Graph {
   // Depth first search. Returns number of traversed vertices
   // For SCC it returns size of single SCC
   void DFS(int key, std::map<int, bool> &visited, std::vector<int> &scc);
+
+  void reset_visited_vertices(std::map<int, bool> &visited);
 };
 
 void ExtendedGraph::fill_stack(int key, std::map<int, bool> &visited, Stack &stack) {
@@ -63,11 +65,7 @@ SCCs ExtendedGraph::count_SCCs() {
   // Mark all vertices as unchecked for 1st DFS
   // Take one extra value in one-based index
   std::map<int, bool> visited;
-  for (auto &kv : this->vertices) {
-    visited[kv.first] = false;
-    for (auto i = kv.second->edges.begin(); i != kv.second->edges.end(); i++)
-        visited[*i] = false;
-  }
+  reset_visited_vertices(visited);
 
   Stack stack;
 
@@ -78,11 +76,7 @@ SCCs ExtendedGraph::count_SCCs() {
   }
 
   // Mark all vertices as unchecked for 2nd DFS
-  for (auto &kv : this->vertices) {
-    visited[kv.first] = false;
-    for (auto i = kv.second->edges.begin(); i != kv.second->edges.end(); i++)
-        visited[*i] = false;
-  }
+  reset_visited_vertices(visited);
 
   ExtendedGraph *transposed = this->transpose();
 
@@ -127,6 +121,14 @@ void ExtendedGraph::print_graph() {
       std::cout << kv.first << " - " << *i << std::endl;
 
   std::cout << std::endl;
+}
+
+void ExtendedGraph::reset_visited_vertices(std::map<int, bool> &visited) {
+  for (auto &kv : this->vertices) {
+    visited[kv.first] = false;
+    for (auto i = kv.second->edges.begin(); i != kv.second->edges.end(); i++)
+        visited[*i] = false;
+  }
 }
 
 #endif
