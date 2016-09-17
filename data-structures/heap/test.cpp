@@ -2,52 +2,41 @@
 #include "../../helpers/print.hpp"
 #include "iostream"
 #include "stdlib.h"
+#include "vector"
 
 #define COUNT 5
 
 using namespace std;
 
 // Generate int array with 'count' random elements
-int* gen_array(size_t count);
-
-// Test for removing nodes from heap
-// template <typename T> void remove_test(Heap<T> &);
+template <class Type>
+void gen_array(Type &type, size_t count);
 
 int main(int argc, char const *argv[]) {
 
-  int *array = gen_array(COUNT);
-  cout << "\nOriginal:" << endl;
-  print(array, array + COUNT);
+  vector<int> v(COUNT);
+  gen_array(v, COUNT);
+  cout << "\nVector:" << endl;
+  print(v.begin(), v.end());
+  make_heap(v.begin(), v.end());
+  print(v.begin(), v.end());
 
+  int *array = new int[COUNT];
+  gen_array(array, COUNT);
+  cout << "\nArray:" << endl;
+  print(array, array + COUNT);
   make_heap(array, array + COUNT);
-  cout << "\nHeap:" << endl;
   print(array, array + COUNT);
-
-  // Heap<int> heap(array, COUNT, MIN);
-  // cout << "\nPretty: " << endl;
-  // heap.print();
-  //
-  // for (size_t i = 0; i < COUNT; i++) {
-  //   remove_test(heap);
-  // }
 
   delete[] array;
 
   return 0;
 }
 
-int* gen_array(std::size_t count) {
-  int *array = new int[count];
+template <class Type>
+void gen_array(Type &array, size_t count) {
   srand(time(0));
 
-  for (size_t i = 0; i < count; i++) {
+  for (size_t i = 0; i < count; ++i)
     array[i] = rand() % 20;
-  }
-
-  return array;
 }
-//
-// template <typename T> void remove_test(Heap<T> &heap) {
-//   cout << "\nRemoved element: " << heap.remove(0) << endl;
-//   heap.print();
-// }

@@ -3,65 +3,66 @@
 
 #include "iterator"
 
-// #define PARENT(x) ( (x - 1) >> 1 )
-// #define LEFT(x)   ( (x << 1) + 1 )
-// #define RIGHT(x)  ( (x << 1) + 2 )
-
-
+// Following functions are available in this compilation unit only
 namespace {
+  template <class Iter>
+  Iter get_left(Iter begin, Iter node) {
+    auto idx = std::distance(begin, node);
+    return begin + (idx << 1) + 1;
+  }
 
-}
+  template <class Iter>
+  Iter get_right(Iter begin, Iter node) {
+    auto idx = std::distance(begin, node);
+    return begin + (idx << 1) + 2;
+  }
 
-template <class Iter>
-Iter get_left(Iter begin, Iter node) {
-  auto idx = node - begin;
-  return begin + (idx << 1) + 1;
-}
+  template <class Iter>
+  Iter parent(Iter begin, Iter node) {
+    auto idx = std::distance(begin, node);
+    return begin + ((idx - 1) >> 1);
+  }
 
-template <class Iter>
-Iter get_right(Iter begin, Iter node) {
-  auto idx = node - begin;
-  return begin + (idx << 1) + 2;
-}
+  template <class Iter, class Comparator>
+  void heapify(Iter begin, Iter end, Iter node, Comparator cmp) {
+    Iter for_replace;
 
-template <class Iter>
-Iter parent(Iter begin, Iter node) {
-  auto idx = node - begin;
-  return begin + ((idx - 1) >> 1);
-}
+    // Get left and right child of parent node
+    Iter left  = get_left(begin, node);
+    Iter right = get_right(begin, node);
 
-template <class Iter, class Comparator>
-void heapify(Iter begin, Iter end, Iter node, Comparator cmp) {
-  Iter for_replace;
+    // Find element which breaks heap rule
+    if ((left < end) && !cmp( *left, *node))
+      for_replace = left;
+    else
+      for_replace = node;
 
-  // Get left and right child of parent node
-  Iter left  = get_left(begin, node);
-  Iter right = get_right(begin, node);
+    if ((right < end) && !cmp( *right, *for_replace))
+      for_replace = right;
 
-  // Find element which breaks heap rule
-  if ((left < end) && !cmp( *left, *node))
-    for_replace = left;
-  else
-    for_replace = node;
-
-  if ((right < end) && !cmp( *right, *for_replace))
-    for_replace = right;
-
-  // Replace element wich breaks heap rule and recur on that element
-  if (for_replace != node) {
-    std::swap( *node, *for_replace);
-    heapify(begin, end, for_replace, cmp);
+    // Replace element wich breaks heap rule and recur on that element
+    if (for_replace != node) {
+      std::swap( *node, *for_replace);
+      heapify(begin, end, for_replace, cmp);
+    }
   }
 }
 
+// Rearranges the elements in the range [first,last)
+// in such a way that they form a heap.
+// The elements are compared using 'cmp' function
+// The element with the highest value is an element for which this would return
+// false when compared to every other element in the range.
 template <class Iter, class Comparator>
 void make_heap(Iter first, Iter last, Comparator cmp) {
   // Heapify first half of input array
-  auto middle = ((last - first) >> 1) - 1;
-  for (auto iter = middle; middle >= 0; --middle)
+  auto middle = (std::distance(first, last) >> 1) - 1;
+  for (auto iter = middle; iter >= 0; --iter) {
     heapify(first, last, iter + first, cmp);
+  }
 }
 
+// This version of the function uses operator< to compare the elements
 template <class Iter>
 void make_heap(Iter first, Iter last) {
   typedef typename std::iterator_traits<Iter>::value_type T;
@@ -89,49 +90,5 @@ void pop_heap(Iter first, Iter last) {
   typedef typename std::iterator_traits<Iter>::value_type T;
   pop_heap(first, last, std::less<T>());
 }
-
-
-// #include <stddef.h>
-// #include <vector>
-//
-// enum Type   { MAX, MIN };
-// enum Order  { ASC, DESC };
-// template<class T>
-// class Heap {
-//
-//  typedef std::vector<T> Nodes;
-//
-//  public:
-//   Heap(const T *array, size_t length, Type type = MAX);
-//
-//   static void sort(T *array, size_t length, Order ord = ASC);
-//
-//   T get_root_element();
-//   T extract_root();
-//
-//   void update_key(int node, T key);
-//
-//   void insert(T key);
-//   T    remove(int node);
-//
-//   void print();
-//
-//   Nodes get_nodes()  { return nodes; }
-//   int   get_size()   { return size; }
-//   int   get_length() { return this->nodes.size(); }
-//   Type  get_type()   { return type; }
-//   bool  empty()      { return this->size == 0; }
-//
-//  private:
-//   Nodes nodes;
-//   int   size;
-//   Type  type;
-//
-//   void heapify(int node);
-//   int  find_replace_index(int left, int right, int parent);
-//   void build_heap();
-// };
-//
-// #include "heap.tpp"
 
 #endif
