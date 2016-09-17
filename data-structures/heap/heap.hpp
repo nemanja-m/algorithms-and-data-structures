@@ -92,9 +92,20 @@ void push_heap(Iter first, Iter last) {
   push_heap(first, last, std::less<T>());
 }
 
+// Rearranges the elements in the heap range [first,last) in such a way
+// that the part considered a heap is shortened by one:
+// The element with the highest value is moved to (last-1).
+//
+// While the element with the highest value is moved from first to (last-1)
+// (which now is out of the heap), the other elements are reorganized
+// in such a way that the range [first,last-1) preserves the properties of a heap.
 template <class Iter, class Comparator>
-void pop_heap(Iter first, Iter last, Comparator cmp);
+void pop_heap(Iter first, Iter last, Comparator cmp) {
+  std::swap( *first, *(last - 1));
+  heapify(first, last - 1, first, cmp);
+}
 
+// This version of the function uses operator< to compare the elements
 template <class Iter>
 void pop_heap(Iter first, Iter last) {
   typedef typename std::iterator_traits<Iter>::value_type T;

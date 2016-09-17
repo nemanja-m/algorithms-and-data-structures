@@ -43,6 +43,14 @@ int main(int argc, char const *argv[]) {
   print(v.begin(), v.end());
   cout << endl;
 
+  // Pop heap example
+
+  cout << "\nAfter heap pop: " << endl;
+  pop_heap(v.begin(), v.end());
+  v.pop_back();
+  print(v.begin(), v.end());
+  cout << endl;
+
   return 0;
 }
 
