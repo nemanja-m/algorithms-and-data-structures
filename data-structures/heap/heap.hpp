@@ -18,7 +18,7 @@ namespace {
   }
 
   template <class Iter>
-  Iter parent(Iter begin, Iter node) {
+  Iter get_parent(Iter begin, Iter node) {
     auto idx = std::distance(begin, node);
     return begin + ((idx - 1) >> 1);
   }
@@ -69,11 +69,21 @@ void make_heap(Iter first, Iter last) {
   make_heap(first, last, std::less<T>());
 }
 
-// Inserts the element at the position last-1 into the max heap
-// defined by the range [first, last-1).
+// Given a heap in the range [first,last-1), this function extends the range
+// considered a heap to [first,last) by placing the value in (last-1)
+// into its corresponding location within it.
 // Uses the given comparison function cmp.
 template <class Iter, class Comparator>
-void push_heap(Iter first, Iter last, Comparator cmp);
+void push_heap(Iter first, Iter last, Comparator cmp) {
+  Iter iter = last - 1;
+  Iter parent = get_parent(first, last - 1);
+
+  while (iter != first && !cmp( *iter, *parent)) {
+    std::swap( *iter, *parent);
+    iter = get_parent(first, iter);
+    parent = get_parent(first, iter);
+  }
+}
 
 // This version of the function uses operator< to compare the elements
 template <class Iter>
