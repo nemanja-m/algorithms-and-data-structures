@@ -3,7 +3,7 @@
 #include "iostream"
 #include "stdlib.h"
 
-#define COUNT 9
+#define COUNT 5
 
 using namespace std;
 
@@ -11,7 +11,7 @@ using namespace std;
 int* gen_array(size_t count);
 
 // Test for removing nodes from heap
-template <typename T> void remove_test(Heap<T> &);
+// template <typename T> void remove_test(Heap<T> &);
 
 int main(int argc, char const *argv[]) {
 
@@ -19,13 +19,17 @@ int main(int argc, char const *argv[]) {
   cout << "\nOriginal:" << endl;
   print(array, array + COUNT);
 
-  Heap<int> heap(array, COUNT, MIN);
-  cout << "\nPretty: " << endl;
-  heap.print();
+  make_heap(array, array + COUNT);
+  cout << "\nHeap:" << endl;
+  print(array, array + COUNT);
 
-  for (size_t i = 0; i < COUNT; i++) {
-    remove_test(heap);
-  }
+  // Heap<int> heap(array, COUNT, MIN);
+  // cout << "\nPretty: " << endl;
+  // heap.print();
+  //
+  // for (size_t i = 0; i < COUNT; i++) {
+  //   remove_test(heap);
+  // }
 
   delete[] array;
 
@@ -42,8 +46,8 @@ int* gen_array(std::size_t count) {
 
   return array;
 }
-
-template <typename T> void remove_test(Heap<T> &heap) {
-  cout << "\nRemoved element: " << heap.remove(0) << endl;
-  heap.print();
-}
+//
+// template <typename T> void remove_test(Heap<T> &heap) {
+//   cout << "\nRemoved element: " << heap.remove(0) << endl;
+//   heap.print();
+// }

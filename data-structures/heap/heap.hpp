@@ -3,13 +3,63 @@
 
 #include "iterator"
 
-#define PARENT(x) ( (x - 1) >> 1 )
-#define LEFT(x)   ( (x << 1) + 1 )
-#define RIGHT(x)  ( (x << 1) + 2 )
+// #define PARENT(x) ( (x - 1) >> 1 )
+// #define LEFT(x)   ( (x << 1) + 1 )
+// #define RIGHT(x)  ( (x << 1) + 2 )
+
+
+namespace {
+
+}
+
+template <class Iter>
+Iter get_left(Iter begin, Iter node) {
+  auto idx = node - begin;
+  return begin + (idx << 1) + 1;
+}
+
+template <class Iter>
+Iter get_right(Iter begin, Iter node) {
+  auto idx = node - begin;
+  return begin + (idx << 1) + 2;
+}
+
+template <class Iter>
+Iter parent(Iter begin, Iter node) {
+  auto idx = node - begin;
+  return begin + ((idx - 1) >> 1);
+}
+
+template <class Iter, class Comparator>
+void heapify(Iter begin, Iter end, Iter node, Comparator cmp) {
+  Iter for_replace;
+
+  // Get left and right child of parent node
+  Iter left  = get_left(begin, node);
+  Iter right = get_right(begin, node);
+
+  // Find element which breaks heap rule
+  if ((left < end) && !cmp( *left, *node))
+    for_replace = left;
+  else
+    for_replace = node;
+
+  if ((right < end) && !cmp( *right, *for_replace))
+    for_replace = right;
+
+  // Replace element wich breaks heap rule and recur on that element
+  if (for_replace != node) {
+    std::swap( *node, *for_replace);
+    heapify(begin, end, for_replace, cmp);
+  }
+}
 
 template <class Iter, class Comparator>
 void make_heap(Iter first, Iter last, Comparator cmp) {
-
+  // Heapify first half of input array
+  auto middle = ((last - first) >> 1) - 1;
+  for (auto iter = middle; middle >= 0; --middle)
+    heapify(first, last, iter + first, cmp);
 }
 
 template <class Iter>
@@ -40,23 +90,7 @@ void pop_heap(Iter first, Iter last) {
   pop_heap(first, last, std::less<T>());
 }
 
-namespace {
 
-  template <class Iter>
-  Iter find_replace_node(Iter left, Iter right, Iter parent) {
-
-  }
-  
-  template <class Iter>
-  void heapify(Iter node) {
-    Iter for_replace = find_replace_node(LEFT(node), RIGHT(node), node);
-
-    if (for_replace != node) {
-      std::swap( *node, *for_replace);
-      heapify(for_replace);
-    }
-  }
-}
 // #include <stddef.h>
 // #include <vector>
 //
