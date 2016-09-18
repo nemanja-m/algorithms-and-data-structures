@@ -12,7 +12,7 @@ class BinarySearchTree {
       delete root;
     }
 
-    void insert(Node<Object> *node) { insert_at(node, root); }
+    void insert(Node<Object> *node) { insert_at(node, &root); }
 
     void remove(int key);
     void remove(Node<Object> *node) { remove(node->key); }
@@ -20,7 +20,7 @@ class BinarySearchTree {
     Node<Object> * get_root() const { return root; }
 
   private:
-    void insert_at(Node<Object> *node, Node<Object> *root);
+    void insert_at(Node<Object> *node, Node<Object> **root);
     Node<Object> *root;
 };
 

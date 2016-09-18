@@ -5,10 +5,10 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
   int data = 42;
-  Node<int> node(1, data);
+  Node<int> *node = new Node<int>(1, data);
 
   BinarySearchTree<int> bst;
-  bst.insert(&node);
+  bst.insert(node);
 
   cout << bst.get_root()->key << endl;
 
