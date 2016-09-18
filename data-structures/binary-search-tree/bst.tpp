@@ -7,6 +7,25 @@ void BinarySearchTree<Object>::insert_at(Node<Object> *node, Node<Object> **root
     *root = node;
     return;
   }
+
+  // Left subtree
+  if (node->key <= (*root)->key) {
+    if ( (*root)->left == nullptr) {
+      (*root)->left = node;
+      return;
+    }
+
+    insert_at(node, & (*root)->left);
+  }
+  // Right subtree
+  else {
+    if ( (*root)->right == nullptr) {
+      (*root)->right = node;
+      return;
+    }
+
+    insert_at(node, & (*root)->right);
+  }
 }
 
 #endif
