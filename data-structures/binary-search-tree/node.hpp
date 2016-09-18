@@ -8,6 +8,12 @@ struct Node {
   Node *right;
 
   Object *data;
+
+  ~Node() {
+    delete parent;
+    delete left;
+    delete right;
+  }
 };
 
 #endif
