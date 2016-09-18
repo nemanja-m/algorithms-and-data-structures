@@ -3,36 +3,25 @@
 
 #include "graph.hpp"
 #include "queue"
-#include "tuple"
-#include "iostream"
-using namespace std;
 
-struct Path {
-  std::vector<int> nodes;
-  int cost;
-
-  Path() : cost(0) { }
-  Path(int c) : cost(c) {}
-};
-
-// Extend bas struct with parent, cost and operator> so we can
+// Extend base struct with cost and operator> so we can
 // use priority_queue
 struct PriorityVertex : Vertex {
   size_t cost;
-  int parent;
 
-  PriorityVertex(size_t c) : cost(c) { }
-  PriorityVertex(const Vertex &rhs, size_t c) : Vertex(rhs), cost(c) { }
+  PriorityVertex(const Vertex &rhs, size_t c)
+   : Vertex(rhs), cost(c) { }
 
   friend bool operator> (const PriorityVertex &lhs, const PriorityVertex &rhs) {
     return lhs.cost > rhs.cost;
   }
 };
 
+// Map representing distances from source vertex
+// to all other vertices in graph
 typedef std::map<int, size_t> Dist;
 
 Dist dijkstra(Graph *graph, const int source) {
-  Path path;
 
   std::priority_queue<PriorityVertex,
                       std::vector<PriorityVertex>,
@@ -59,7 +48,7 @@ Dist dijkstra(Graph *graph, const int source) {
     for (auto &edge : top.edges) {
       if (visited.find(edge.destination) == visited.end()) {
         queue.push(PriorityVertex(*graph->vertices[edge.destination],
-          top.cost + edge.cost));
+                                  top.cost + edge.cost));
 
         distances[edge.destination] = top.cost + edge.cost;
       }

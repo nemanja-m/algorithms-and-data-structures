@@ -10,9 +10,10 @@ Graph* load_graph(string filename = "test_data/test_2.txt");
 
 int main(int argc, char const *argv[]) {
   Graph *graph = load_graph();
-
   Dist distances = dijkstra(graph, 1);
 
+  // Print distances from source vertex to
+  // all otehr vertices in the graph
   size_t count = graph->vertices.size();
   for (size_t i = 1; i <= count; i++)
     cout << i << " " << distances[i] << endl;
@@ -36,6 +37,7 @@ Graph* load_graph(string filename) {
     graph->add_vertex(src);
 
     string edge;
+
     while (stream >> edge) {
       size_t pos = edge.find(",");
       int dst = stoi(edge.substr(0, pos));
