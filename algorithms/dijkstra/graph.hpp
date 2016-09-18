@@ -20,7 +20,9 @@ struct Vertex {
   int key;
   Edges edges;
 
+  Vertex() : key(-1) { }
   Vertex(int k) : key(k) { }
+  Vertex(const Vertex &rhs) : key(rhs.key), edges(rhs.edges) { }
 };
 
 typedef std::map<int, Vertex *> Vertices;
