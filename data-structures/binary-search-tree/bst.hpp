@@ -22,7 +22,7 @@ class BinarySearchTree {
 
     // Returns node with specific key or nullptr if node
     // doesn't exist in tree
-    Node<Object> * find(int key) { return find_at(key, root); }
+    Node<Object> * find(int key) const { return find_at(key, root); }
 
     // Returns node with minimum key or nullptr is tree is empty
     Node<Object> * find_min() const {
@@ -39,8 +39,8 @@ class BinarySearchTree {
     void print(Node<Object> *node, int indent = 0) const;
 
   private:
-    void insert_at(Node<Object> *node, Node<Object> **root);
-    Node<Object> * find_at(int key, Node<Object> *node);
+    void           insert_at(Node<Object> *node, Node<Object> **root);
+    Node<Object> * find_at(int key, Node<Object> *node) const;
     Node<Object> * find_min_at(Node<Object> *node) const;
     Node<Object> * find_max_at(Node<Object> *node) const;
 

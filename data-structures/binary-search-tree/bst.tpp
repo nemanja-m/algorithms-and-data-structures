@@ -16,7 +16,7 @@ void BinarySearchTree<Object>::insert_at(Node<Object> *node, Node<Object> **root
 }
 
 template <class Object>
-Node<Object> * BinarySearchTree<Object>::find_at(int key, Node<Object> *node) {
+Node<Object> * BinarySearchTree<Object>::find_at(int key, Node<Object> *node) const {
   if (node == nullptr || node->key ==key)
     return node;
 
@@ -28,16 +28,16 @@ Node<Object> * BinarySearchTree<Object>::find_at(int key, Node<Object> *node) {
 
 template <class Object>
 Node<Object> * BinarySearchTree<Object>::find_min_at(Node<Object> *node) const {
-  if (node->left != nullptr)
-    return find_min_at(node->left);
+  while (node->left)
+    node = node->left;
 
   return node;
 }
 
 template <class Object>
 Node<Object> * BinarySearchTree<Object>::find_max_at(Node<Object> *node) const {
-  if (node->right != nullptr)
-    return find_min_at(node->right);
+  while (node->right)
+    node = node->right;
 
   return node;
 }
