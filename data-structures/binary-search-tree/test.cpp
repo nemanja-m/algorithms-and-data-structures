@@ -10,11 +10,14 @@ int main(int argc, char const *argv[]) {
   bst.insert(new Node<int>(5, data));
   bst.insert(new Node<int>(3, data));
   bst.insert(new Node<int>(7, data));
+  bst.insert(new Node<int>(2, data));
 
   auto root = bst.get_root();
-  cout << root->key << endl;
-  cout << root->left->key << endl;
-  cout << root->right->key << endl;
+  // cout << root->key << endl;
+  // cout << root->left->key << endl;
+  // cout << root->right->key << endl;
 
+  bst.print(root);
+  cout << endl;
   return 0;
 }

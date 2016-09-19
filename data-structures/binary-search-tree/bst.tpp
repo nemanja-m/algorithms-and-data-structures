@@ -1,5 +1,7 @@
 #ifdef __BST__
 
+#include "queue"
+
 template <class Object>
 void BinarySearchTree<Object>::insert_at(Node<Object> *node, Node<Object> **root) {
   // Empty tree
@@ -25,6 +27,24 @@ void BinarySearchTree<Object>::insert_at(Node<Object> *node, Node<Object> **root
     }
 
     insert_at(node, & (*root)->right);
+  }
+}
+
+template <class Object>
+void BinarySearchTree<Object>::print(Node<Object> *n, int indent) {
+  std::queue<Node<Object> * > queue;
+  queue.push(n);
+
+  while (!queue.empty()) {
+    Node<Object> *node = queue.front();
+    queue.pop();
+
+    if (node != nullptr) {
+      std::cout << node->key << " ";
+
+      queue.push(node->left);
+      queue.push(node->right);
+    }
   }
 }
 
