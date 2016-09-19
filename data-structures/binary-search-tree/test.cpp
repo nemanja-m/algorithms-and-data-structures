@@ -22,5 +22,9 @@ int main(int argc, char const *argv[]) {
   cout << "Node at 7: " << (bst.find(7) ? to_string(bst.find(7)->data) : "null") << endl;
   cout << "Node at 10: " << (bst.find(10) ? to_string(bst.find(10)->data) : "null") << endl;
 
+  // Min and max
+  Node<int> *min = bst.find_min();
+  cout << "Min node: " << (min ? to_string(min->key) : "null" ) << endl;
+
   return 0;
 }

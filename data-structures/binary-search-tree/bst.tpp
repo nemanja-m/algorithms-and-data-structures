@@ -27,6 +27,14 @@ Node<Object> * BinarySearchTree<Object>::find_at(int key, Node<Object> *node) {
 }
 
 template <class Object>
+Node<Object> * BinarySearchTree<Object>::find_min_at(Node<Object> *node) {
+  if (node->left != nullptr)
+    return find_min_at(node->left);
+
+  return node;
+}
+
+template <class Object>
 void BinarySearchTree<Object>::print(Node<Object> *n, int indent) {
   std::queue<Node<Object> * > queue;
   queue.push(n);
