@@ -27,7 +27,7 @@ Node<Object> * BinarySearchTree<Object>::find_at(int key, Node<Object> *node) {
 }
 
 template <class Object>
-Node<Object> * BinarySearchTree<Object>::find_min_at(Node<Object> *node) {
+Node<Object> * BinarySearchTree<Object>::find_min_at(Node<Object> *node) const {
   if (node->left != nullptr)
     return find_min_at(node->left);
 
@@ -35,7 +35,7 @@ Node<Object> * BinarySearchTree<Object>::find_min_at(Node<Object> *node) {
 }
 
 template <class Object>
-Node<Object> * BinarySearchTree<Object>::find_max_at(Node<Object> *node) {
+Node<Object> * BinarySearchTree<Object>::find_max_at(Node<Object> *node) const {
   if (node->right != nullptr)
     return find_min_at(node->right);
 
@@ -43,7 +43,7 @@ Node<Object> * BinarySearchTree<Object>::find_max_at(Node<Object> *node) {
 }
 
 template <class Object>
-void BinarySearchTree<Object>::print(Node<Object> *n, int indent) {
+void BinarySearchTree<Object>::print(Node<Object> *n, int indent) const {
   std::queue<Node<Object> * > queue;
   queue.push(n);
 
