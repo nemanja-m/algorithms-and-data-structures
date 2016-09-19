@@ -26,5 +26,8 @@ int main(int argc, char const *argv[]) {
   Node<int> *min = bst.find_min();
   cout << "Min node: " << (min ? to_string(min->key) : "null" ) << endl;
 
+  Node<int> *max = bst.find_max();
+  cout << "Max node: " << (max ? to_string(max->key) : "null" ) << endl;
+
   return 0;
 }

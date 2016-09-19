@@ -29,6 +29,11 @@ class BinarySearchTree {
       return root ? find_min_at(root) : nullptr;
     }
 
+    // Returns node with maximim key or nullptr is tree is empty
+    Node<Object> * find_max() {
+      return root ? find_max_at(root) : nullptr;
+    }
+
     Node<Object> * get_root() const { return root; }
 
     void print(Node<Object> *node, int indent = 0);
@@ -37,6 +42,7 @@ class BinarySearchTree {
     void insert_at(Node<Object> *node, Node<Object> **root);
     Node<Object> * find_at(int key, Node<Object> *node);
     Node<Object> * find_min_at(Node<Object> *node);
+    Node<Object> * find_max_at(Node<Object> *node);
 
     Node<Object> *root;
 };
