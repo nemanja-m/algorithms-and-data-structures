@@ -31,6 +31,17 @@ void BinarySearchTree<Object>::insert_at(Node<Object> *node, Node<Object> **root
 }
 
 template <class Object>
+Node<Object> * BinarySearchTree<Object>::find_at(int key, Node<Object> *node) {
+  if (node == nullptr || node->key ==key)
+    return node;
+
+  if (key <= node->key)
+    return find_at(key, node->left);
+  else
+    return find_at(key, node->right);
+}
+
+template <class Object>
 void BinarySearchTree<Object>::print(Node<Object> *n, int indent) {
   std::queue<Node<Object> * > queue;
   queue.push(n);
@@ -46,6 +57,8 @@ void BinarySearchTree<Object>::print(Node<Object> *n, int indent) {
       queue.push(node->right);
     }
   }
+
+  std::cout << std::endl;
 }
 
 #endif
