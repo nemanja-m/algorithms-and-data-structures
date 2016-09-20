@@ -39,15 +39,15 @@ int main(int argc, char const *argv[]) {
 
   // Traversal
   cout << "\nIn-order:" << endl;
-  bst.traverse_in_order(root);
+  bst.traverse_in_order(root, [](Node<int> *n) { cout << n->key << " "; });
   cout << endl;
 
-  cout << "\nPre-order:" << endl;
-  bst.traverse_pre_order(root);
+  cout << "\nPre-order: + 10" << endl;
+  bst.traverse_pre_order(root, [](Node<int> *n) { cout << n->key + 10 << " "; });
   cout << endl;
 
-  cout << "\nPost-order:" << endl;
-  bst.traverse_post_order(root);
+  cout << "\nPost-order: * 2" << endl;
+  bst.traverse_post_order(root, [](Node<int> *n) { cout << n->key * 2 << " "; });
   cout << endl;
 
   return 0;

@@ -54,30 +54,33 @@ void BinarySearchTree<Object>::replace_in_parent(Node<Object> *node, Node<Object
 }
 
 template <class Object>
-void BinarySearchTree<Object>::traverse_in_order(Node<Object> *root) {
+template <class Callback>
+void BinarySearchTree<Object>::traverse_in_order(Node<Object> *root, Callback callback) {
   if (!root) return;
 
-  traverse_in_order(root->left);
-  std::cout << root->key << " ";
-  traverse_in_order(root->right);
+  traverse_in_order(root->left, callback);
+  callback(root);
+  traverse_in_order(root->right, callback);
 }
 
 template <class Object>
-void BinarySearchTree<Object>::traverse_pre_order(Node<Object> *root) {
+template <class Callback>
+void BinarySearchTree<Object>::traverse_pre_order(Node<Object> *root, Callback callback) {
   if (!root) return;
 
-  std::cout << root->key << " ";
-  traverse_pre_order(root->left);
-  traverse_pre_order(root->right);
+  callback(root);
+  traverse_pre_order(root->left, callback);
+  traverse_pre_order(root->right, callback);
 }
 
 template <class Object>
-void BinarySearchTree<Object>::traverse_post_order(Node<Object> *root) {
+template <class Callback>
+void BinarySearchTree<Object>::traverse_post_order(Node<Object> *root, Callback callback) {
   if (!root) return;
 
-  traverse_post_order(root->left);
-  traverse_post_order(root->right);
-  std::cout << root->key << " ";
+  traverse_post_order(root->left, callback);
+  traverse_post_order(root->right, callback);
+  callback(root);
 }
 
 template <class Object>

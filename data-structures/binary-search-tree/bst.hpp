@@ -37,9 +37,14 @@ class BinarySearchTree {
       return root ? find_max_at(root) : nullptr;
     }
 
-    void traverse_in_order(Node<Object> *root);
-    void traverse_pre_order(Node<Object> *root);
-    void traverse_post_order(Node<Object> *root);
+    template <class Callback>
+    void traverse_in_order(Node<Object> *root, Callback callback);
+
+    template <class Callback>
+    void traverse_pre_order(Node<Object> *root, Callback callback);
+
+    template <class Callback>
+    void traverse_post_order(Node<Object> *root, Callback callback);
 
     inline Node<Object> * get_root() const { return root; }
 
