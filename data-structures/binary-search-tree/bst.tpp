@@ -72,6 +72,15 @@ void BinarySearchTree<Object>::traverse_pre_order(Node<Object> *root) {
 }
 
 template <class Object>
+void BinarySearchTree<Object>::traverse_post_order(Node<Object> *root) {
+  if (!root) return;
+
+  traverse_post_order(root->left);
+  traverse_post_order(root->right);
+  std::cout << root->key << " ";
+}
+
+template <class Object>
 Node<Object> * BinarySearchTree<Object>::find_at(int key, Node<Object> *node) const {
   if (node == nullptr || node->key ==key)
     return node;

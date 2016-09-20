@@ -47,7 +47,7 @@ int main(int argc, char const *argv[]) {
   cout << endl;
 
   cout << "\nPost-order:" << endl;
-  // bst.traverse_post_order(root);
+  bst.traverse_post_order(root);
   cout << endl;
 
   return 0;
