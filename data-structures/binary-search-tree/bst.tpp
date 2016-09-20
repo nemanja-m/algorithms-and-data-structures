@@ -58,8 +58,17 @@ void BinarySearchTree<Object>::traverse_in_order(Node<Object> *root) {
   if (!root) return;
 
   traverse_in_order(root->left);
-  std::cout << root->key << std::endl;
+  std::cout << root->key << " ";
   traverse_in_order(root->right);
+}
+
+template <class Object>
+void BinarySearchTree<Object>::traverse_pre_order(Node<Object> *root) {
+  if (!root) return;
+
+  std::cout << root->key << " ";
+  traverse_pre_order(root->left);
+  traverse_pre_order(root->right);
 }
 
 template <class Object>
