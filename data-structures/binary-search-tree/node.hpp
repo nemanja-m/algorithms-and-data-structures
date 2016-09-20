@@ -16,7 +16,6 @@ struct Node {
     : key(k), parent(p), left(l), right(r), data(d) { }
 
   ~Node() {
-    if (parent != nullptr) delete parent;
     if (left != nullptr) delete left;
     if (right != nullptr) delete right;
   }

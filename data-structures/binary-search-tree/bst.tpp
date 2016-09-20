@@ -3,16 +3,54 @@
 #include "queue"
 
 template <class Object>
-void BinarySearchTree<Object>::insert_at(Node<Object> *node, Node<Object> **root) {
-  if (*root == nullptr) {
+void BinarySearchTree<Object>::insert_at(Node<Object> *node, Node<Object> **root, Node<Object> *parent) {
+  if (!*root) {
     *root = node;
+    (*root)->parent = parent;
+  }
+  else if (node->key <= (*root)->key)
+    insert_at(node, & (*root)->left, *root);
+  else
+    insert_at(node, & (*root)->right, *root);
+}
+
+template <class Object>
+void BinarySearchTree<Object>::remove(Node<Object> *node) {
+  // Node doesn't exist in tree
+  if (!node) return;
+
+  // Node have both child
+  if (node->left && node->right) {
+    Node<Object> *replacement = find_max_at(node->left);
+    node->key = replacement->key;
+    node->data = replacement->data;
+    remove(replacement);
     return;
   }
 
-  if (node->key <= (*root)->key)
-    insert_at(node, & (*root)->left);
-  else
-    insert_at(node, & (*root)->right);
+  if (node->left)  // Node have only left child
+    replace_in_parent(node, node->left);
+  else if (node->right) // Node have only right child
+    replace_in_parent(node, node->right);
+  else  // Node doesn't have children
+    replace_in_parent(node);
+
+  node->left = node->right = nullptr;
+  delete node;
+}
+
+template <class Object>
+void BinarySearchTree<Object>::replace_in_parent(Node<Object> *node, Node<Object> *replacement) {
+  if (node->parent) {
+    if (node->parent->left == node)
+      node->parent->left = replacement;
+
+    if (node->parent->right == node)
+      node->parent->right = replacement;
+
+    if (replacement)
+      replacement->parent = node->parent;
+  }
 }
 
 template <class Object>

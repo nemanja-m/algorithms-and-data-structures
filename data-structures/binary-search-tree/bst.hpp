@@ -17,8 +17,11 @@ class BinarySearchTree {
     void insert(Node<Object> *node) { insert_at(node, &root); }
 
     // Removes node from tree if it exists
-    void remove(int key);
-    void remove(Node<Object> *node) { remove(node->key); }
+    void remove(Node<Object> *node);
+    void remove(int key) {
+      Node<Object> *node = find(key);
+      remove(node);
+    }
 
     // Returns node with specific key or nullptr if node
     // doesn't exist in tree
@@ -39,10 +42,13 @@ class BinarySearchTree {
     void print(Node<Object> *node, int indent = 0) const;
 
   private:
-    void           insert_at(Node<Object> *node, Node<Object> **root);
+    void insert_at(Node<Object> *node, Node<Object> **root, Node<Object> *parent = nullptr);
     Node<Object> * find_at(int key, Node<Object> *node) const;
     Node<Object> * find_min_at(Node<Object> *node) const;
     Node<Object> * find_max_at(Node<Object> *node) const;
+
+    // Replaces 'node->parent' corresponding child with `replacement`
+    void replace_in_parent(Node<Object> *node, Node<Object> *replacement = nullptr);
 
     Node<Object> *root;
 };

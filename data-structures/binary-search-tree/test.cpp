@@ -13,7 +13,13 @@ int main(int argc, char const *argv[]) {
   bst.insert(new Node<int>(3, ++data));
   bst.insert(new Node<int>(7, ++data));
   bst.insert(new Node<int>(2, ++data));
+  bst.insert(new Node<int>(4, ++data));
 
+  bst.print(bst.get_root());
+
+  // Remove test
+  cout << "After remove: " << endl;
+  bst.remove(3);
   bst.print(bst.get_root());
 
   // Search tree test
