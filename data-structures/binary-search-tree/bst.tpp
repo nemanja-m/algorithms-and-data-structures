@@ -54,6 +54,15 @@ void BinarySearchTree<Object>::replace_in_parent(Node<Object> *node, Node<Object
 }
 
 template <class Object>
+void BinarySearchTree<Object>::traverse_in_order(Node<Object> *root) {
+  if (!root) return;
+
+  traverse_in_order(root->left);
+  std::cout << root->key << std::endl;
+  traverse_in_order(root->right);
+}
+
+template <class Object>
 Node<Object> * BinarySearchTree<Object>::find_at(int key, Node<Object> *node) const {
   if (node == nullptr || node->key ==key)
     return node;

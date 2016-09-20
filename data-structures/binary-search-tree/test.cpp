@@ -35,5 +35,7 @@ int main(int argc, char const *argv[]) {
   Node<int> *max = bst.find_max();
   cout << "Max node: " << (max ? to_string(max->key) : "null" ) << endl;
 
+  // Traversal
+  bst.traverse_in_order(bst.get_root());
   return 0;
 }
