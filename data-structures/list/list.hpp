@@ -81,27 +81,41 @@ class List {
     };
 
   public:
-    List() {
-    }
+    List() { init(); }
 
     List(const List & rhs) {
-
+      init();
+      for (auto &x : rhs)
+        push_back(x);
     }
 
-    List(List && rhs) {
-
+    List(List && rhs)
+      : _size(rhs._size), _head(rhs._head), _tail(rhs._tail)
+    {
+      rhs._size = 0;
+      rhs._head = nullptr;
+      rhs._tail = nullptr;
     }
 
     List & operator= (const List & rhs) {
-
+      List copy = rhs;
+      std::swap(*this, copy);
+      return *this;
     }
 
     List & operator= (List && rhs) {
+      std::swap(_size, rhs._size);
+      std::swap(_head, rhs._head);
+      std::swap(_tail, rhs._tail);
 
+      return *this;
     }
 
-    ~List() {}
-
+    ~List() {
+      clear();
+      delete _head;
+      delete _tail;
+    }
 
     iterator begin() { return _head->next; }
     iterator end() { return _tail; }
@@ -136,6 +150,14 @@ class List {
     size_t _size;
     Node * _head;
     Node * _tail;;
+
+    void init() {
+      _size = 0;
+      _head = new Node;
+      _tail = new Node;
+      _head->next = _tail;
+      _tail->prev = _head;
+    }
 };
 
 #endif
