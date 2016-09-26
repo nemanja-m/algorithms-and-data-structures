@@ -37,6 +37,17 @@ class List {
           return old;
         }
 
+        const_iterator operator-- () {
+          current = current->prev;
+          return *this;
+        }
+
+        const_iterator operator-- (int) {
+          const_iterator old = *this;
+          --(*this);
+          return old;
+        }
+
         bool operator== (const const_iterator & rhs) const {
           return current == rhs.current;
         }
@@ -71,6 +82,17 @@ class List {
         iterator operator++ (int) {
           iterator old = *this;
           ++(*this);
+          return old;
+        }
+
+        iterator operator-- () {
+          this->current = this->current->prev;
+          return *this;
+        }
+
+        iterator operator-- (int) {
+          iterator old = *this;
+          --(*this);
           return old;
         }
 
@@ -170,6 +192,18 @@ class List {
       Node * p = itr.current;
       _size++;
       return (p->prev->next = p->prev = new Node(std::move(x), p->prev, p));
+    }
+
+    // Erases element at iterator. Returns iterator of next element.
+    iterator erase(iterator itr) {
+      Node * p = itr.current;
+      iterator ret(p->next);
+      p->prev->next = p->next;
+      p->next->prev = p->prev;
+      _size--;
+      delete p;
+
+      return ret;
     }
 };
 
