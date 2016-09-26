@@ -158,6 +158,19 @@ class List {
       _head->next = _tail;
       _tail->prev = _head;
     }
+
+    // Insert node before iterator
+    iterator insert(iterator itr, const Object & x) {
+      Node * p = itr.current;
+      _size++;
+      return (p->prev->next = p->prev = new Node(x, p->prev, p));
+    }
+
+    iterator insert(iterator itr, Object && x) {
+      Node * p = itr.current;
+      _size++;
+      return (p->prev->next = p->prev = new Node(std::move(x), p->prev, p));
+    }
 };
 
 #endif
