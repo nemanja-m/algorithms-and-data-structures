@@ -8,6 +8,8 @@ int main(int _argc, char** _argv) {
   List<int> list;
 
   cout << "\n-- Push back --" << endl;
+  cout << "> pushed 42" << endl;
+  cout << "> pushed 23" << endl;
   list.push_back(42);
   list.push_back(23);
 
@@ -18,6 +20,12 @@ int main(int _argc, char** _argv) {
   srand(time(0));
   for (int i = 1; i < 10; i++)
     list.push_front(i);
+
+  for (auto iter = list.begin(); iter != list.end(); iter++)
+    cout << *iter << " ";
+
+  cout << "\n\n-- Erase range --" << endl;
+  list.erase(++list.begin(), --list.end());
 
   for (auto iter = list.begin(); iter != list.end(); iter++)
     cout << *iter << " ";

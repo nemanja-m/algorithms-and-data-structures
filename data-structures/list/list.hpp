@@ -168,19 +168,6 @@ class List {
         pop_front();
     }
 
-  private:
-    size_t _size;
-    Node * _head;
-    Node * _tail;;
-
-    void init() {
-      _size = 0;
-      _head = new Node;
-      _tail = new Node;
-      _head->next = _tail;
-      _tail->prev = _head;
-    }
-
     // Insert node before iterator
     iterator insert(iterator itr, const Object & x) {
       Node * p = itr.current;
@@ -204,6 +191,28 @@ class List {
       delete p;
 
       return ret;
+    }
+
+    // Erases elements in range [from, to)
+    // Returns iterator to the first non-deleted element (to)
+    iterator erase(iterator from, iterator to) {
+      for (auto iter = from; iter != to;)
+        iter = erase(iter);
+
+      return to;
+    }
+
+  private:
+    size_t _size;
+    Node * _head;
+    Node * _tail;;
+
+    void init() {
+      _size = 0;
+      _head = new Node;
+      _tail = new Node;
+      _head->next = _tail;
+      _tail->prev = _head;
     }
 };
 
