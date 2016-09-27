@@ -7,8 +7,6 @@
 template <class Object>
 class Stack {
   public:
-    Stack() : _top(-1) { }
-
     void push(const Object &x) {
       array.push_back(x);
     }
@@ -21,9 +19,20 @@ class Stack {
       return array.back();
     }
 
+    void pop() {
+      array.pop_back();
+    }
+
+    void clear() {
+      array.clear();
+    }
+
+    size_t size() const {
+      return array.size();
+    }
+
   private:
     std::vector<Object> array;
-    int _top;
 };
 
 #endif
