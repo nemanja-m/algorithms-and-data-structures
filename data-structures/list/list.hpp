@@ -1,7 +1,8 @@
 #ifndef __LIST__
 #define __LIST__
 
-#include "iterator"
+#include "utility"
+#include "stddef.h"
 
 template <class Object>
 class List {
@@ -162,7 +163,6 @@ class List {
     void pop_front() { erase(begin()); }
     void pop_back() { erase(--end()); }
 
-
     void clear() {
       while(!empty())
         pop_front();
@@ -185,13 +185,13 @@ class List {
     iterator insert(iterator itr, const Object & x) {
       Node * p = itr.current;
       _size++;
-      return (p->prev->next = p->prev = new Node(x, p->prev, p));
+      return (p->prev = p->prev->next = new Node(x, p->prev, p));
     }
 
     iterator insert(iterator itr, Object && x) {
       Node * p = itr.current;
       _size++;
-      return (p->prev->next = p->prev = new Node(std::move(x), p->prev, p));
+      return (p->prev = p->prev->next = new Node(std::move(x), p->prev, p));
     }
 
     // Erases element at iterator. Returns iterator of next element.
