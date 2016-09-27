@@ -3,6 +3,7 @@
 
 #include "utility"
 #include "stddef.h"
+#include "stdexcept"
 
 template <class Object>
 class List {
@@ -23,7 +24,7 @@ class List {
   public:
     class  const_iterator {
       public:
-        const_iterator() : current(nullptr) {}
+        const_iterator() : current(nullptr), list(nullptr) {}
 
         const Object & operator* () const { return retreive(); }
 
@@ -57,11 +58,19 @@ class List {
           return current != rhs.current;
         }
 
+        // Throws an exception if any assertion isn't met
+        void assert_is_valid() {
+          if (current == nullptr || list == nullptr || current == list->_head)
+            throw std::out_of_range("Iterator out of range");
+        }
+
       protected:
         Node *current;
+        const List<Object> *list;
 
         Object & retreive() { return current->data; }
-        const_iterator(Node *p) : current(p) { }
+
+        const_iterator(const List<Object> &l, Node *p) : current(p), list(&l) { }
 
         friend class List<Object>;
     };
@@ -98,7 +107,7 @@ class List {
         }
 
       protected:
-        iterator(Node *p) : const_iterator(p) { }
+        iterator(const List<Object> &l, Node *p) : const_iterator(l, p) { }
 
         friend class List<Object>;
     };
@@ -140,10 +149,11 @@ class List {
       delete _tail;
     }
 
-    iterator begin() { return _head->next; }
-    iterator end() { return _tail; }
-    const_iterator begin() const { return _head->next; }
-    const_iterator end() const { return _tail; }
+    iterator begin() { return ++(iterator(*this, _head)); }
+    iterator end() { return iterator(*this, _tail); }
+
+    const_iterator begin() const { return ++(const_iterator(*this, _head)); }
+    const_iterator end() const { return const_iterator(*this, _tail); }
 
     size_t size() const { return _size; }
     bool empty() const { return _size == 0; }
@@ -170,21 +180,37 @@ class List {
 
     // Insert node before iterator
     iterator insert(iterator itr, const Object & x) {
+      itr.assert_is_valid();
+      if (itr.list != this)
+        throw std::invalid_argument("Iterator mismatch");
+
       Node * p = itr.current;
       _size++;
-      return (p->prev = p->prev->next = new Node(x, p->prev, p));
+      p->prev = p->prev->next = new Node(x, p->prev, p);
+
+      return { *this, p->prev };
     }
 
     iterator insert(iterator itr, Object && x) {
+      itr.assert_is_valid();
+      if (itr.list != this)
+        throw std::invalid_argument("Iterator mismatch");
+
       Node * p = itr.current;
       _size++;
-      return (p->prev = p->prev->next = new Node(std::move(x), p->prev, p));
+      p->prev = p->prev->next = new Node(std::move(x), p->prev, p);
+
+      return { *this, p->prev };
     }
 
     // Erases element at iterator. Returns iterator of next element.
     iterator erase(iterator itr) {
+      itr.assert_is_valid();
+      if (itr.list != this)
+        throw std::invalid_argument("Iterator mismatch");
+
       Node * p = itr.current;
-      iterator ret(p->next);
+      iterator ret(*this, p->next);
       p->prev->next = p->next;
       p->next->prev = p->prev;
       _size--;
