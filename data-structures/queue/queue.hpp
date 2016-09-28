@@ -6,6 +6,7 @@
 #include "stddef.h"
 #include "math.h"
 #include "utility"
+#include "stdexcept"
 
 template <class Object>
 class Queue {
@@ -37,10 +38,10 @@ class Queue {
 
     Object & dequeue() {
       if (empty())
-        return nullptr;
+        throw std::runtime_error("Queue empty");
 
       --_size;
-      Object ret = std::move(_array[_front++]);
+      Object &ret = _array[_front++];
 
       // Queue empty
       if (_front > _back) {
@@ -52,6 +53,8 @@ class Queue {
     }
 
     bool empty() const { return _size == 0; }
+    size_t size() const { return _size; }
+    size_t capacity() const { return _capacity; }
 
   private:
     Object * _array;
@@ -68,7 +71,7 @@ class Queue {
     void check_capacity() {
       // Queue is full, we need more space
       if ((_back + 1) == _capacity) {
-        size_t space = _size <= INIT_CAPACITY ?
+        size_t space = _size < (INIT_CAPACITY - 1) ?
           INIT_CAPACITY : next_power(_size + 1);
 
         reshape(space);
