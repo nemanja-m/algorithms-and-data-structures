@@ -5,6 +5,7 @@
 
 #include "stddef.h"
 #include "math.h"
+#include "utility"
 
 template <class Object>
 class Queue {
@@ -14,6 +15,8 @@ class Queue {
         INIT_CAPACITY : next_power(capacity);
 
       _array = new Object[_capacity];
+      _front = 0;
+      _back = -1;
     }
 
     ~Queue() {
@@ -21,16 +24,34 @@ class Queue {
     }
 
     void enqueue(const Object & x) {
-
+      check_capacity();
+      _array[++_back] = x;
+      ++_size;
     }
 
     void enqueue(Object && x) {
-
+      check_capacity();
+      _array[++_back] = std::move(x);
+      ++_size;
     }
 
     Object & dequeue() {
+      if (empty())
+        return nullptr;
 
+      --_size;
+      Object ret = std::move(_array[_front++]);
+
+      // Queue empty
+      if (_front > _back) {
+        _front = 0;
+        _back = -1;
+      }
+
+      return ret;
     }
+
+    bool empty() { return _size == 0; }
 
   private:
     Object * _array;
@@ -42,6 +63,35 @@ class Queue {
     // Returns next power of 2 greater than 'num'
     size_t next_power(int num) {
       return (size_t) pow(2, ceil( log(num) / log(2) ));
+    }
+
+    void check_capacity() {
+      // Queue is full, we need more space
+      if ((_back + 1) == _capacity) {
+        size_t space = _size <= INIT_CAPACITY ?
+          INIT_CAPACITY : next_power(_size + 1);
+
+        reshape(space);
+      }
+    }
+
+    // Allocates more space than previous array capacity
+    // and copies all elements from original array to new one
+    void reshape(size_t space) {
+      if (space <= _size)
+        return;
+
+      Object * temp = new Object[space];
+      _capacity = space;
+
+      for (size_t i = _front, k = 0; i <= _back; i++)
+        temp[k++] = std::move(_array[i]);
+
+      std::swap(temp, _array);
+      delete[] temp;
+
+      _back = _size - 1;
+      _front = 0;
     }
 };
 
