@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
 
   cout << "\n-- Enqueuing --" << endl;
 
-  for (int i = 0; i < 18; i++) {
+  for (int i = 0; i < 16; i++) {
     cout << "--> " << i << endl;
     queue.enqueue(i);
   }
@@ -16,7 +16,6 @@ int main(int argc, char** argv) {
   cout << "\nCapacity: " << queue.capacity() << endl;
 
   cout << "\n-- Dequeuing --" << endl;
-
   while (!queue.empty())
     cout << queue.dequeue() << " ";
 

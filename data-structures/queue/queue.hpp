@@ -52,6 +52,15 @@ class Queue {
       return ret;
     }
 
+    void clear() {
+      _front = 0;
+      _back = -1;
+      _size = 0;
+      delete[] _array;
+
+      _array = new Object[INIT_CAPACITY];
+    }
+
     bool empty() const { return _size == 0; }
     size_t size() const { return _size; }
     size_t capacity() const { return _capacity; }
