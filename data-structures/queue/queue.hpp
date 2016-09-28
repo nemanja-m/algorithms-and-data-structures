@@ -51,7 +51,7 @@ class Queue {
       return ret;
     }
 
-    bool empty() { return _size == 0; }
+    bool empty() const { return _size == 0; }
 
   private:
     Object * _array;
