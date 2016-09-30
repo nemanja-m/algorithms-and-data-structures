@@ -40,7 +40,7 @@ For an example:
 ```
 
 ``` bash
-./balance "[(]"
+./balance "[)]"
 
-# => -- Unbalanced! [ __(__ ] --
+# => -- Unbalanced! [')'] --
 ```
