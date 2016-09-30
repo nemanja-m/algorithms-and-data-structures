@@ -6,7 +6,7 @@
 
 struct Result {
   bool   balanced = false;
-  size_t idx = 0;
+  size_t index = 0;
 };
 
 inline bool is_opening(const char &symbol) {
@@ -36,7 +36,7 @@ Result balance(const std::string &symbols) {
   std::stack<char> stack;
 
   for (size_t i = 0; i < symbols.size(); ++i) {
-    ret.idx = i;
+    ret.index = i;
 
     if (is_opening(symbols[i])) {
       stack.push(symbols[i]);
