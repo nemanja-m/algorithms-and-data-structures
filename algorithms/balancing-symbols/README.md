@@ -17,14 +17,6 @@ The simple algorithm uses stack and is as follows:
 
 Given algorithm has `O(n)` time complexity.
 
-# Tests
-
-To run tests use:
-
-``` bash
-make test
-```
-
 # Usage
 
 Compile with:
@@ -44,11 +36,11 @@ For an example:
 ``` bash
 ./balance "[{()}]"
 
-# => Balanced
+# => -- Balanced --
 ```
 
 ``` bash
 ./balance "[(]"
 
-# => Unbalanced! [ __(__ ]
+# => -- Unbalanced! [ __(__ ] --
 ```
