@@ -27,7 +27,7 @@ std::string inline_to_postfix(std::string & expression) {
   return expression;
 }
 
-  double evaluate(std::string & expression) {
+double evaluate(std::string & expression) {
   std::string postfix = inline_to_postfix(expression);
 
   std::stack<double> operands;
