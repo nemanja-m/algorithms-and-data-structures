@@ -23,12 +23,12 @@ double apply(const char & op, double x, double y) {
   return result;
 }
 
-std::string inline_to_postfix(std::string & expression) {
-
-}
+// std::string inline_to_postfix(std::string & expression) {
+//
+// }
 
 double evaluate(std::string & expression) {
-  std::string postfix = inline_to_postfix(expression);
+  // std::string postfix = inline_to_postfix(expression);
 
   std::stack<double> operands;
 
