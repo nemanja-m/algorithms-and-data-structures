@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     args.append(argv[i]);
   }
 
-  cout << args << endl;
+  cout << "\nResult: " << "\e[32m" << evaluate(args) << "\e[0m\n\n";
 
   return 0;
 }
