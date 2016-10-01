@@ -10,6 +10,18 @@ bool is_operator(const char &op) {
   return (op == '-') || (op == '+') || (op == '*') || (op == '/');
 }
 
+// Checks weather first argument is lower priority than second
+bool is_lower_priority(const char & first, const char & second) {
+  switch (second) {
+    case '(' : return first != ')';
+    case '*' :
+    case '/' : return (first == '+') || (first == '-');
+  }
+
+  return false;
+}
+
+// Applies given operator to operands
 double apply(const char & op, double x, double y) {
   double result;
 
@@ -24,11 +36,54 @@ double apply(const char & op, double x, double y) {
 }
 
 std::string inline_to_postfix(std::string & expression) {
-  return expression;
+  std::string      output;
+  std::stack<char> operators;
+
+  for (char &symbol : expression) {
+    if (is_operator(symbol) || (symbol == '(') || (symbol == ')')) {
+
+      if (symbol == ')') {
+        while ( !operators.empty() && (operators.top() != '(') ) {
+          output.push_back(operators.top());
+          operators.pop();
+        }
+
+        // Pop '('
+        operators.pop();
+      }
+      else {
+        // +, -, *, (
+        // Pop stack until we find an operator with lower priority
+        while (!operators.empty() && !is_lower_priority(operators.top(), symbol)) {
+          output.push_back(operators.top());
+          operators.pop();
+        }
+      }
+
+      // After popping, push current operator to stack
+      operators.push(symbol);
+    }
+    else {
+      // If current symbol is operand
+      output.push_back(symbol);
+    }
+  }
+
+  // Put remaining operators from stack to output
+  while (!operators.empty()) {
+    output.push_back(operators.top());
+    operators.pop();
+  }
+
+  return output;
 }
+
+#include "iostream"
 
 double evaluate(std::string & expression) {
   std::string postfix = inline_to_postfix(expression);
+
+  std::cout << "\npostfix: " << postfix << "\n\n";
 
   std::stack<double> operands;
 
