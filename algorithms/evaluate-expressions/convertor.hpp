@@ -10,12 +10,12 @@ bool is_operator(const char &op) {
   return (op == '-') || (op == '+') || (op == '*') || (op == '/');
 }
 
-// Checks weather first argument is lower priority than second
-bool is_lower_priority(const char & first, const char & second) {
-  switch (second) {
-    case '(' : return first != ')';
-    case '*' :
-    case '/' : return (first == '+') || (first == '-');
+// Checks weather first argument is higher priority than second
+bool is_higher_priority(const char & first, const char & second) {
+  switch (first) {
+    case '(' : return true;
+    case '/' :
+    case '*' : return (second == '+') || (second == '-');
   }
 
   return false;
@@ -40,7 +40,7 @@ std::string inline_to_postfix(std::string & expression) {
   std::stack<char> operators;
 
   for (char &symbol : expression) {
-    if (is_operator(symbol) || (symbol == '(') || (symbol == ')')) {
+    if ( is_operator(symbol) || (symbol == '(') || (symbol == ')') ) {
 
       if (symbol == ')') {
         while ( !operators.empty() && (operators.top() != '(') ) {
@@ -54,14 +54,19 @@ std::string inline_to_postfix(std::string & expression) {
       else {
         // +, -, *, (
         // Pop stack until we find an operator with lower priority
-        while (!operators.empty() && !is_lower_priority(operators.top(), symbol)) {
+        while (!operators.empty() && is_higher_priority(operators.top(), symbol)) {
+          if (operators.top() == '(')
+            break;
+
+          // TODO
           output.push_back(operators.top());
           operators.pop();
         }
+
+        // After popping, push current operator to stack
+        operators.push(symbol);
       }
 
-      // After popping, push current operator to stack
-      operators.push(symbol);
     }
     else {
       // If current symbol is operand
@@ -78,13 +83,8 @@ std::string inline_to_postfix(std::string & expression) {
   return output;
 }
 
-#include "iostream"
-
 double evaluate(std::string & expression) {
   std::string postfix = inline_to_postfix(expression);
-
-  std::cout << "\npostfix: " << postfix << "\n\n";
-
   std::stack<double> operands;
 
   for (char &symbol : postfix) {
@@ -95,7 +95,7 @@ double evaluate(std::string & expression) {
 
       // Apply current operator to popped operands
       // and push result into stack
-      operands.push(apply(symbol, x, y));
+      operands.push(apply(symbol, y, x));
     }
     else {
       operands.push(to_digit(symbol));
