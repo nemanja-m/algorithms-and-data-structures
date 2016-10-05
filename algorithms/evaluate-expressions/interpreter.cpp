@@ -1,6 +1,8 @@
 #include "interpreter.hpp"
 #include "string"
 #include "iostream"
+#include "evaluator.hpp"
+#include "parser.hpp"
 
 namespace Interpreter {
 
@@ -20,7 +22,7 @@ namespace Interpreter {
       std::cout << ">>> ";
 
       std::string ret;
-      std::cin >> ret;
+      std::getline(std::cin, ret);
 
       return ret;
     }
@@ -30,14 +32,15 @@ namespace Interpreter {
       if (expression == "exit")
         exit(0);
 
-      return 42;
+      std::vector<std::string> tokens = ::Parser::parse(expression);
+
+      return ::Evaluator::evaluate(tokens);
     }
 
     // Prints content to standard output
     template <class Object> void print(const Object &content) {
       std::cout << ">>> " << content << std::endl;
     }
-
   }
 
   void start() {
