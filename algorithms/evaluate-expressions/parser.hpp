@@ -21,7 +21,7 @@ bool is_num_char(const char &ch) {
 // => ["1.23", "+", "7", "*", "(", "2", "/", "2.5", ")"]
 //
 std::vector<std::string> parse(std::string args) {
-  // Erase spaces
+  // Remove white spaces
   args.erase(remove_if(args.begin(), args.end(), ::isspace), args.end());
 
   std::string digit;
@@ -30,7 +30,8 @@ std::vector<std::string> parse(std::string args) {
   for (std::string::size_type i = 0; i < args.size(); ++i) {
     if (is_num_char(args[i])) {
       digit.push_back(args[i]);
-    } else {
+    }
+    else {
       // Push prevoius parsed number
       if (!digit.empty()) {
         tokens.push_back(digit);

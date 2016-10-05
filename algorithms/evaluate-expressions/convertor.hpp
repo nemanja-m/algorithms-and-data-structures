@@ -5,10 +5,13 @@
 #include "stack"
 #include "vector"
 
-#define to_digit(x) (x - '0')
-
 bool is_operator(const std::string &op) {
-  return (op == "-") || (op == "+") || (op == "*") || (op == "/") || (op == "(") || (op ==")");
+  return  (op == "-")
+          || (op == "+")
+          || (op == "*")
+          || (op == "/")
+          || (op == "(")
+          || (op == ")");
 }
 
 // Checks weather first argument is higher priority than second
@@ -37,11 +40,13 @@ double apply(const char & op, double x, double y) {
 }
 
 std::vector<std::string> inline_to_postfix(std::vector<std::string> & tokens) {
+
   std::vector<std::string> output;
-  std::stack<std::string> operators;
+  std::stack<std::string>  operators;
 
   for (auto &token : tokens) {
     if (is_operator(token)) {
+
       if (token == ")") {
         while ( !operators.empty() && (operators.top() != "(") ) {
           output.push_back(operators.top());
@@ -52,13 +57,11 @@ std::vector<std::string> inline_to_postfix(std::vector<std::string> & tokens) {
         operators.pop();
       }
       else {
-        // +, -, *, (
         // Pop stack until we find an operator with lower priority
-        while (!operators.empty() && is_higher_priority(operators.top()[0], token[0])) {
-          if (operators.top() == "(")
-            break;
-
-          // TODO
+        while (!operators.empty()
+               && is_higher_priority(operators.top()[0], token[0])
+               && (operators.top() != "("))
+        {
           output.push_back(operators.top());
           operators.pop();
         }
