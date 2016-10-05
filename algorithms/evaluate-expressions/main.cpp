@@ -1,6 +1,6 @@
 #include "convertor.hpp"
+#include "parser.hpp"
 #include "iostream"
-#include "algorithm"
 
 using namespace std;
 
@@ -16,10 +16,9 @@ int main(int argc, char **argv) {
     args.append(argv[i]);
   }
 
-  // Erase spaces
-  args.erase(remove_if(args.begin(), args.end(), ::isspace), args.end());
+  vector<string> tokens = parse(args);
 
-  cout << "\nResult: " << "\e[32m" << evaluate(args) << "\e[0m\n\n";
+  cout << "\nResult: " << "\e[32m" << evaluate(tokens) << "\e[0m\n\n";
 
   return 0;
 }
