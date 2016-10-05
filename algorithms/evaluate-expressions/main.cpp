@@ -1,5 +1,6 @@
 #include "convertor.hpp"
 #include "parser.hpp"
+#include "interpreter.hpp"
 #include "iostream"
 
 using namespace std;
@@ -16,9 +17,10 @@ int main(int argc, char **argv) {
     args.append(argv[i]);
   }
 
-  vector<string> tokens = parse(args);
-
-  cout << "\nResult: " << "\e[32m" << evaluate(tokens) << "\e[0m\n\n";
+  Interpreter::start();
+  // vector<string> tokens = parse(args);
+  //
+  // cout << "\nResult: " << "\e[32m" << evaluate(tokens) << "\e[0m\n\n";
 
   return 0;
 }
