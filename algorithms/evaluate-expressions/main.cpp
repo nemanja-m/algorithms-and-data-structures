@@ -16,10 +16,9 @@ int main(int argc, char **argv) {
     args.append(argv[i]);
   }
 
-  vector<string> symbols = parse(args);
+  vector<string> tokens = parse(args);
 
-  cout << endl;
-  // cout << "\nResult: " << "\e[32m" << evaluate(args) << "\e[0m\n\n";
+  cout << "\nResult: " << "\e[32m" << evaluate(tokens) << "\e[0m\n\n";
 
   return 0;
 }

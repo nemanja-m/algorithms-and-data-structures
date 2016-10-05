@@ -3,11 +3,12 @@
 
 #include "string"
 #include "stack"
+#include "vector"
 
 #define to_digit(x) (x - '0')
 
-bool is_operator(const char &op) {
-  return (op == '-') || (op == '+') || (op == '*') || (op == '/');
+bool is_operator(const std::string &op) {
+  return (op == "-") || (op == "+") || (op == "*") || (op == "/") || (op == "(") || (op ==")");
 }
 
 // Checks weather first argument is higher priority than second
@@ -35,15 +36,14 @@ double apply(const char & op, double x, double y) {
   return result;
 }
 
-std::string inline_to_postfix(std::string & expression) {
-  std::string      output;
-  std::stack<char> operators;
+std::vector<std::string> inline_to_postfix(std::vector<std::string> & tokens) {
+  std::vector<std::string> output;
+  std::stack<std::string> operators;
 
-  for (char &symbol : expression) {
-    if ( is_operator(symbol) || (symbol == '(') || (symbol == ')') ) {
-
-      if (symbol == ')') {
-        while ( !operators.empty() && (operators.top() != '(') ) {
+  for (auto &token : tokens) {
+    if (is_operator(token)) {
+      if (token == ")") {
+        while ( !operators.empty() && (operators.top() != "(") ) {
           output.push_back(operators.top());
           operators.pop();
         }
@@ -54,8 +54,8 @@ std::string inline_to_postfix(std::string & expression) {
       else {
         // +, -, *, (
         // Pop stack until we find an operator with lower priority
-        while (!operators.empty() && is_higher_priority(operators.top(), symbol)) {
-          if (operators.top() == '(')
+        while (!operators.empty() && is_higher_priority(operators.top()[0], token[0])) {
+          if (operators.top() == "(")
             break;
 
           // TODO
@@ -64,13 +64,13 @@ std::string inline_to_postfix(std::string & expression) {
         }
 
         // After popping, push current operator to stack
-        operators.push(symbol);
+        operators.push(token);
       }
 
     }
     else {
-      // If current symbol is operand
-      output.push_back(symbol);
+      // If current token is operand
+      output.push_back(token);
     }
   }
 
@@ -83,22 +83,23 @@ std::string inline_to_postfix(std::string & expression) {
   return output;
 }
 
-double evaluate(std::string & expression) {
-  std::string postfix = inline_to_postfix(expression);
+double evaluate(std::vector<std::string> & tokens) {
+  std::vector<std::string> postfix = inline_to_postfix(tokens);
   std::stack<double> operands;
 
-  for (char &symbol : postfix) {
-    if (is_operator(symbol)) {
+  for (auto &token : postfix) {
+    if (is_operator(token)) {
       // All operators are binary so we pop 2 operands from stack
       double x = operands.top(); operands.pop();
       double y = operands.top(); operands.pop();
 
       // Apply current operator to popped operands
       // and push result into stack
-      operands.push(apply(symbol, y, x));
+      operands.push(apply(token[0], y, x));
     }
     else {
-      operands.push(to_digit(symbol));
+      // Convert string to double
+      operands.push(std::stod(token));
     }
   }
 
