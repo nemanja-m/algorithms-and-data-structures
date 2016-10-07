@@ -23,25 +23,16 @@ in given input. After that, using stack, we can simply evaluate expression, also
 When an operand is read, it is immediately placed onto output. operators are not immediately output, so they must be saved somewhere.
 The correct thing to do is to place operators that have been seen, but not placed on the output, onto stack. We will also stack left parentheses when they are encountered. We start with an initially empty stack.
 
-<br>
-
 If we see a right parenthesis, then we pop the stack, writing symbols until we encouter a (corresponding) left parenthesis, which is popped but not output.
 
-<br>
-
 If we see any other symbol (+, \*, -, ( ), then we pop entries from the stack until we find an entry of lower priority. One exception is that we never remove a '(' from the stack except when processing a ')'. For the purpose of this operation, + has lowest priority and '(' highest.
-
-<br>
 
 When popping is done, we push the operator onto the stack.
 Finally, if we read the end of input, we pop stack until it is empty, writing symbols onto the output.
 
-
 ## Postfix Notation Evaluation
 
 When a number is seen, it is pushed onto stack. When an operator is seen, the operator is applied to the two numbers popped from the stack, and the result is pushed onto the stack.
-
-<br>
 
 For instance, the postfix expression
 
