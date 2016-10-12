@@ -38,6 +38,12 @@ modification on previous algorithm.
 Task is to compute number of target values `t` in the interval [-10000, 10000] such that there are distinct numbers `x, y` in input array
 that satisfy `x + y = t`
 
+In this case we don't use `map` because even if lookup is `O(1)` we would still have billions of lookups. To be more precise, we would have
+20001 * 1000000 lookups, and that is too much.
+
+Instead, we sort input array and for each number `x` in array define window `[-10000 - x, 10000 - x]` then find numbers in that window.
+Count of numbers in each window is equal to count of numbers in interval `[-10000, 10000]` that are equal to sum of some 2 distinct number from input file.
+
 Run Coursera's test with:
 
 ``` bash
