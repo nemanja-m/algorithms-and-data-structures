@@ -26,8 +26,22 @@ class Heap {
       return _array[0];
     }
 
-    size_t size() const { return _array.size(); }
+    int size() const { return _array.size(); }
     bool empty() const { return size() == 0; }
+
+    friend void balance_heaps(Heap &min, Heap &max) {
+      if ( (min.size() - max.size()) > 1) {
+        Object tmp = min.top();
+        min.pop();
+        max.push(tmp);
+      }
+
+      if ( (max.size() - min.size()) > 1) {
+        Object tmp = max.top();
+        max.pop();
+        min.push(tmp);
+      }
+    }
 
   private:
     std::vector<Object> _array;
