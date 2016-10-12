@@ -9,7 +9,7 @@ int main(int argc, const char *argv[]) {
 
   int target = 6;
 
-  cout << "Target: " << target << endl;
+  cout << "\nTarget: " << target << endl;
   cout << "Number of pairs: " << TwoSum::count(array, target) << endl;
 
   return 0;
