@@ -50,7 +50,7 @@ int main(int argc, const char *argv[]) {
       sum += min_heap.top();
   }
 
-  cout << "Sum of medians: " << sum << endl;
+  cout << "\nSum of medians: " << sum << endl;
   cout << "Moduo 10000: " << sum % 10000 << endl;
 
   return 0;
